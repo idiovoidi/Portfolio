@@ -53,7 +53,6 @@ export const Skills: React.FC = () => {
                     key={`${skill.name}-${skillIndex}`}
                     name={skill.name}
                     icon={skill.icon}
-                    proficiency={skill.proficiency}
                     index={skillIndex}
                   />
                 ))}

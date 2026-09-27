@@ -5,7 +5,6 @@ import * as SimpleIcons from 'react-icons/si';
 export interface SkillBadgeProps {
   name: string;
   icon?: string;
-  proficiency?: number;
   className?: string;
   index?: number;
 }
@@ -13,7 +12,6 @@ export interface SkillBadgeProps {
 const SkillBadge: React.FC<SkillBadgeProps> = ({ 
   name, 
   icon, 
-  proficiency, 
   className = '',
   index = 0
 }) => {
@@ -146,33 +144,6 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
       >
         {name}
       </span>
-
-      {/* Optional Proficiency Indicator - Optimized for performance */}
-      {proficiency !== undefined && (
-        <div
-          style={{
-            marginTop: '0.5rem',
-            width: '100%',
-            height: '3px',
-            backgroundColor: 'rgba(139, 92, 246, 0.2)',
-            borderRadius: '2px',
-            overflow: 'hidden',
-            position: 'relative',
-          }}
-        >
-          {/* Use CSS transition instead of Framer Motion for better performance */}
-          <div
-            style={{
-              height: '100%',
-              background: 'linear-gradient(90deg, rgba(139, 92, 246, 0.8) 0%, rgba(167, 139, 250, 1) 100%)',
-              borderRadius: '2px',
-              boxShadow: '0 0 8px rgba(139, 92, 246, 0.6)',
-              width: isInView ? `${proficiency}%` : '0%',
-              transition: `width ${prefersReducedMotion ? '0s' : '0.8s'} ease-out ${animationDelay + 0.2}s`,
-            }}
-          />
-        </div>
-      )}
     </motion.div>
   );
 };
