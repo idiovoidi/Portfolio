@@ -68,6 +68,7 @@ export const Hero = () => {
           maxWidth: "900px",
           position: "relative",
           zIndex: 10,
+          pointerEvents: "none",
         }}
       >
         {/* Name with glitch effect */}
@@ -84,6 +85,7 @@ export const Hero = () => {
             lineHeight: "1.2",
             textTransform: "uppercase",
             color: "#ffffff",
+            pointerEvents: "none",
           }}
         >
           {personalInfo.name}
@@ -97,6 +99,7 @@ export const Hero = () => {
             fontWeight: "600",
             color: "#e2e8f0",
             marginBottom: "1.5rem",
+            pointerEvents: "none",
           }}
         >
           {personalInfo.title}
@@ -113,6 +116,7 @@ export const Hero = () => {
             marginLeft: "auto",
             marginRight: "auto",
             lineHeight: "1.6",
+            pointerEvents: "none",
           }}
         >
           {personalInfo.tagline}
@@ -126,6 +130,7 @@ export const Hero = () => {
             gap: "1rem",
             justifyContent: "center",
             flexWrap: "wrap",
+            pointerEvents: "auto",
           }}
         >
           <button
