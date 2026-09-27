@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { threeDWorks, type ThreeDWork } from "../../data/threeD";
 import { ModelViewer } from "../ui/ModelViewer";
+import { DimensionBackground } from "../ui/DimensionBackground";
 import { Section } from "../ui/Section";
 import { TextEffect } from "../ui/TextEffect";
 import { useInView } from "../../hooks";
@@ -17,6 +18,7 @@ export const ThreeD = () => {
     <Section
       id="three-d"
       className="overflow-hidden"
+      background={<DimensionBackground />}
       title={
         <TextEffect effect="glitch" as="h2" className="section-heading">
           3Ð W0RKS

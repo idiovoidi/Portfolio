@@ -51,5 +51,6 @@ export { CommercialBackground } from './CommercialBackground';
 export { CommercialCard } from './CommercialCard';
 export type { CommercialCardProps } from './CommercialCard';
 export { NeuralBackground } from './NeuralBackground';
+export { DimensionBackground } from './DimensionBackground';
 export { GlitchText } from './GlitchText';
 export { VoidEyeball } from './VoidEyeball';
