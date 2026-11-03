@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { usePerformanceSettings } from "../../contexts/PerformanceContext";
-import { type ThreeDWork, threeDWorks } from "../../data/threeD";
+import {
+  type ThreeDTool,
+  type ThreeDWork,
+  threeDWorks,
+} from "../../data/threeD";
 import { useInView } from "../../hooks";
 import {
   createFadeInUp,
@@ -13,6 +17,12 @@ import { DimensionBackground } from "../ui/DimensionBackground";
 import { ModelViewer } from "../ui/ModelViewer";
 import { Section } from "../ui/Section";
 import { TextEffect } from "../ui/TextEffect";
+
+const TOOL_TAG_STYLES: Record<ThreeDTool, string> = {
+  Maya: "bg-[#1F8FD6] border-[#6CC4F5]/60 shadow-[0_0_8px_rgba(31,143,214,0.5)]",
+  "Substance Painter":
+    "bg-[#14A37F] border-[#5EEAC0]/60 shadow-[0_0_8px_rgba(20,163,127,0.5)]",
+};
 
 const CycleImages = ({
   title,
@@ -127,17 +137,27 @@ export const ThreeD = () => {
                 <h3 className="text-lg font-semibold text-cyan-400 mb-1">
                   {work.title}
                 </h3>
-                {work.category && (
-                  <span
-                    className={
-                      work.category === "Zbrush"
-                        ? "inline-block rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white bg-[#F26A1B] border border-[#FF9650]/60 shadow-[0_0_8px_rgba(242,106,27,0.5)]"
-                        : "text-xs text-gray-500 uppercase tracking-wider"
-                    }
-                  >
-                    {work.category}
-                  </span>
-                )}
+                <div className="flex flex-wrap items-center gap-2">
+                  {work.category && (
+                    <span
+                      className={
+                        work.category === "Zbrush"
+                          ? "inline-block rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white bg-[#F26A1B] border border-[#FF9650]/60 shadow-[0_0_8px_rgba(242,106,27,0.5)]"
+                          : "text-xs text-gray-500 uppercase tracking-wider"
+                      }
+                    >
+                      {work.category}
+                    </span>
+                  )}
+                  {work.tools?.map((tool) => (
+                    <span
+                      key={tool}
+                      className={`inline-block rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white border ${TOOL_TAG_STYLES[tool]}`}
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
                 {work.description && (
                   <p className="text-sm text-gray-400 mt-2">
                     {work.description}

@@ -9,6 +9,8 @@ export interface ModelTextures {
   ao?: string;
 }
 
+export type ThreeDTool = "Maya" | "Substance Painter";
+
 export interface ThreeDWork {
   id: string;
   title: string;
@@ -21,6 +23,8 @@ export interface ThreeDWork {
   imageLayout?: "split" | "cycle";
   thumbnail?: string;
   category?: string;
+  /** Software used; rendered as colour-coded tags */
+  tools?: ThreeDTool[];
   textures?: ModelTextures;
 }
 
@@ -31,6 +35,7 @@ export const threeDWorks: ThreeDWork[] = [
     description: "3D barrel model",
     modelPath: "/3D/AnyConv.com__Barrel_FBX.glb",
     category: "Model",
+    tools: ["Maya", "Substance Painter"],
   },
   {
     id: "corrupted-healthpack",
@@ -39,6 +44,7 @@ export const threeDWorks: ThreeDWork[] = [
     // Use base mesh + external maps (embedded bake hits blob Image() issues in some browsers)
     modelPath: "/3D/corrupted-healthpack.glb",
     category: "Model",
+    tools: ["Maya", "Substance Painter"],
     textures: {
       albedo: "/3D/Corrupted_Healthpack/openPBR_shader1_AlbedoTransparency.png",
       normal: "/3D/Corrupted_Healthpack/openPBR_shader1_Normal.png",
@@ -85,6 +91,26 @@ export const threeDWorks: ThreeDWork[] = [
       "/3D/Zbrush/Goat_Sculpt.png",
       "/3D/Zbrush/Goat_Sculpt_Underside.png",
     ],
+    category: "Zbrush",
+  },
+  {
+    id: "humanoid-bat-sculpt",
+    title: "Humanoid Bat Sculpt",
+    imageLayout: "cycle",
+    // Side, front and back views cropped from Bat-Render-Strip.jpg into 800px WebPs
+    images: [
+      "/3D/Zbrush/Bat_Sculpt_1.webp",
+      "/3D/Zbrush/Bat_Sculpt_2.webp",
+      "/3D/Zbrush/Bat_Sculpt_3.webp",
+    ],
+    category: "Zbrush",
+  },
+  {
+    id: "kitbash-car",
+    title: "Kitbash Car",
+    description: "Car sculpt built from kitbashed parts",
+    // Downscaled WebP of Zbrush_Kitbash_Car.jpg (3960x5287, 2.9MB -> 1400px, ~95KB)
+    images: ["/3D/Zbrush/Zbrush_Kitbash_Car.webp"],
     category: "Zbrush",
   },
 ];
