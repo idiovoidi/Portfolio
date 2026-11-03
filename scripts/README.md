@@ -41,14 +41,14 @@ magick --version
 
 ### optimize-photos.ps1
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `-SourceFolder` | Yes | - | Path to folder containing original photos |
-| `-OutputFolder` | No | `public/art` | Where to save optimized images |
-| `-ThumbSize` | No | `600` | Thumbnail dimensions (square) |
-| `-FullSize` | No | `1920` | Max dimension for full-size images |
-| `-ThumbQuality` | No | `80` | WebP quality for thumbnails (0-100) |
-| `-FullQuality` | No | `85` | WebP quality for full-size (0-100) |
+| Parameter       | Required | Default      | Description                               |
+| --------------- | -------- | ------------ | ----------------------------------------- |
+| `-SourceFolder` | Yes      | -            | Path to folder containing original photos |
+| `-OutputFolder` | No       | `public/art` | Where to save optimized images            |
+| `-ThumbSize`    | No       | `600`        | Thumbnail dimensions (square)             |
+| `-FullSize`     | No       | `1920`       | Max dimension for full-size images        |
+| `-ThumbQuality` | No       | `80`         | WebP quality for thumbnails (0-100)       |
+| `-FullQuality`  | No       | `85`         | WebP quality for full-size (0-100)        |
 
 ## What the Script Does
 
@@ -72,11 +72,13 @@ public/art/
 ## Examples
 
 ### Process 2015 Canon Photos
+
 ```powershell
 .\scripts\optimize-photos.ps1 -SourceFolder "C:\Users\Mitchell\Desktop\All Images (Photography)\2015 - Canon EOS 600"
 ```
 
 ### Process Multiple Folders
+
 ```powershell
 # Process each folder separately
 .\scripts\optimize-photos.ps1 -SourceFolder "C:\Photos\2015 - Canon EOS 600"
@@ -85,6 +87,7 @@ public/art/
 ```
 
 ### Higher Quality Settings
+
 ```powershell
 # For portfolio hero images or featured work
 .\scripts\optimize-photos.ps1 -SourceFolder "C:\Photos\Featured" -ThumbQuality 90 -FullQuality 95
@@ -114,20 +117,24 @@ public/art/
 ## Troubleshooting
 
 ### "ImageMagick not found"
+
 - Install ImageMagick (see Prerequisites above)
 - Restart PowerShell after installation
 - Verify with `magick --version`
 
 ### "Execution policy" error
+
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 ### Images too large
+
 - Reduce quality: `-ThumbQuality 70 -FullQuality 75`
 - Reduce dimensions: `-ThumbSize 500 -FullSize 1600`
 
 ### Images too blurry
+
 - Increase quality: `-ThumbQuality 90 -FullQuality 95`
 - Check source image resolution
 

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { MdFullscreen, MdFullscreenExit } from 'react-icons/md';
-import { IoClose } from 'react-icons/io5';
+import React, { useEffect, useState } from "react";
+import { IoClose } from "react-icons/io5";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
 export interface EmbeddedDemoProps {
   isOpen: boolean;
   onClose: () => void;
   embedUrl: string;
   title?: string;
-  aspectRatio?: '16:9' | '4:3' | '1:1';
+  aspectRatio?: "16:9" | "4:3" | "1:1";
 }
 
 const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
@@ -15,27 +15,27 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
   onClose,
   embedUrl,
   title,
-  aspectRatio = '16:9',
+  aspectRatio = "16:9",
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
-  
+
   const aspectRatioMap = {
-    '16:9': 'pb-[56.25%]',
-    '4:3': 'pb-[75%]',
-    '1:1': 'pb-[100%]',
+    "16:9": "pb-[56.25%]",
+    "4:3": "pb-[75%]",
+    "1:1": "pb-[100%]",
   };
-  
+
   useEffect(() => {
     if (isOpen) {
       // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
-      
+      document.body.style.overflow = "hidden";
+
       // Handle ESC key press
       const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
+        if (e.key === "Escape") {
           if (isFullscreen) {
             exitFullscreen();
           } else {
@@ -43,36 +43,39 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
           }
         }
       };
-      
+
       // Handle fullscreen change
       const handleFullscreenChange = () => {
         setIsFullscreen(!!document.fullscreenElement);
       };
-      
-      document.addEventListener('keydown', handleEscape);
-      document.addEventListener('fullscreenchange', handleFullscreenChange);
-      
+
+      document.addEventListener("keydown", handleEscape);
+      document.addEventListener("fullscreenchange", handleFullscreenChange);
+
       return () => {
-        document.body.style.overflow = 'unset';
-        document.removeEventListener('keydown', handleEscape);
-        document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        document.body.style.overflow = "unset";
+        document.removeEventListener("keydown", handleEscape);
+        document.removeEventListener(
+          "fullscreenchange",
+          handleFullscreenChange,
+        );
       };
     }
   }, [isOpen, onClose, isFullscreen]);
-  
+
   const handleIframeLoad = () => {
     setIsLoading(false);
     setHasError(false);
   };
-  
+
   const handleIframeError = () => {
     setIsLoading(false);
     setHasError(true);
   };
-  
+
   const toggleFullscreen = async () => {
     if (!containerRef.current) return;
-    
+
     try {
       if (!isFullscreen) {
         await containerRef.current.requestFullscreen();
@@ -80,29 +83,29 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
         await document.exitFullscreen();
       }
     } catch (error) {
-      console.error('Fullscreen error:', error);
+      console.error("Fullscreen error:", error);
     }
   };
-  
+
   const exitFullscreen = async () => {
     if (document.fullscreenElement) {
       try {
         await document.exitFullscreen();
       } catch (error) {
-        console.error('Exit fullscreen error:', error);
+        console.error("Exit fullscreen error:", error);
       }
     }
   };
-  
+
   const handleClose = async () => {
     await exitFullscreen();
     setIsLoading(true);
     setHasError(false);
     onClose();
   };
-  
+
   if (!isOpen) return null;
-  
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4 animate-fadeIn"
@@ -121,17 +124,21 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
               {title}
             </h3>
           )}
-          
+
           <div className="flex items-center gap-2 ml-auto">
             {/* Fullscreen toggle */}
             <button
               onClick={toggleFullscreen}
               className="p-2 text-text-secondary hover:text-primary transition-colors duration-200 rounded hover:bg-surface"
-              aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+              aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             >
-              {isFullscreen ? <MdFullscreenExit size={24} /> : <MdFullscreen size={24} />}
+              {isFullscreen ? (
+                <MdFullscreenExit size={24} />
+              ) : (
+                <MdFullscreen size={24} />
+              )}
             </button>
-            
+
             {/* Close button */}
             <button
               onClick={handleClose}
@@ -142,9 +149,11 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
             </button>
           </div>
         </div>
-        
+
         {/* Iframe container */}
-        <div className={`relative w-full ${aspectRatioMap[aspectRatio]} bg-black`}>
+        <div
+          className={`relative w-full ${aspectRatioMap[aspectRatio]} bg-black`}
+        >
           {/* Loading indicator */}
           {isLoading && !hasError && (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -154,14 +163,17 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
               </div>
             </div>
           )}
-          
+
           {/* Error state */}
           {hasError && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center p-6">
-                <p className="text-error text-lg font-semibold mb-2">Failed to load demo</p>
+                <p className="text-error text-lg font-semibold mb-2">
+                  Failed to load demo
+                </p>
                 <p className="text-text-secondary text-sm mb-4">
-                  The embedded content could not be loaded. Please try again later.
+                  The embedded content could not be loaded. Please try again
+                  later.
                 </p>
                 <button
                   onClick={handleClose}
@@ -172,12 +184,12 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
               </div>
             </div>
           )}
-          
+
           {/* Iframe */}
           <iframe
             src={embedUrl}
             className="absolute inset-0 w-full h-full border-0"
-            title={title || 'Embedded demo'}
+            title={title || "Embedded demo"}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
             onLoad={handleIframeLoad}

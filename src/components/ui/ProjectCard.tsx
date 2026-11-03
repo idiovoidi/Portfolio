@@ -1,13 +1,14 @@
-import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt, FaGamepad } from "react-icons/fa";
+import type React from "react";
+import { useState } from "react";
+import { FaExternalLinkAlt, FaGamepad, FaGithub } from "react-icons/fa";
 import { FiImage } from "react-icons/fi";
-import { Project } from "../../data/projects";
-import SkillBadge from "./SkillBadge";
+import type { Project } from "../../data/projects";
+import { useTilt } from "../../hooks/useTilt";
+import Button from "./Button";
 import EmbeddedDemo from "./EmbeddedDemo";
 import ScreenshotCarousel from "./ScreenshotCarousel";
-import Button from "./Button";
-import { useTilt } from "../../hooks/useTilt";
+import SkillBadge from "./SkillBadge";
 
 export interface ProjectCardProps {
   project: Project;

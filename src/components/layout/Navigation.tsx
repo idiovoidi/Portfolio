@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { type NavGroup, type NavLink, navLinks } from "../../data/navigation";
 import { useScrollSpy } from "../../hooks";
 import { CursedText } from "../ui/CursedText";
-import { navLinks, type NavGroup, type NavLink } from "../../data/navigation";
 
 const GROUP_THEME: Record<
   NavGroup,
@@ -194,7 +195,7 @@ const Navigation: React.FC = () => {
   // Handle smooth scroll
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    href: string,
   ) => {
     e.preventDefault();
     const targetId = href.replace("#", "");
@@ -311,8 +312,8 @@ const Navigation: React.FC = () => {
                         ? link.id === "home"
                           ? "#3b82f6"
                           : link.id === "contact"
-                          ? "#22c55e"
-                          : "var(--color-primary)"
+                            ? "#22c55e"
+                            : "var(--color-primary)"
                         : "var(--color-text-secondary)",
                     textShadow:
                       isHomeOrContact && activeSection === link.id
@@ -526,20 +527,20 @@ const Navigation: React.FC = () => {
                               ? link.id === "home"
                                 ? "#3b82f6"
                                 : link.id === "contact"
-                                ? "#22c55e"
-                                : groupTheme?.activeColor ??
-                                  "var(--color-primary)"
-                              : groupTheme?.inactiveColor ??
-                                "var(--color-text-secondary)",
+                                  ? "#22c55e"
+                                  : (groupTheme?.activeColor ??
+                                    "var(--color-primary)")
+                              : (groupTheme?.inactiveColor ??
+                                "var(--color-text-secondary)"),
                           textShadow:
                             link.group && activeSection === link.id
                               ? `0 0 8px ${groupTheme?.activeColor}`
                               : link.id === "home" && activeSection === link.id
-                              ? "0 0 10px rgba(59, 130, 246, 0.6)"
-                              : link.id === "contact" &&
-                                activeSection === link.id
-                              ? "0 0 10px rgba(34, 197, 94, 0.6)"
-                              : "none",
+                                ? "0 0 10px rgba(59, 130, 246, 0.6)"
+                                : link.id === "contact" &&
+                                    activeSection === link.id
+                                  ? "0 0 10px rgba(34, 197, 94, 0.6)"
+                                  : "none",
                           border:
                             link.id === "home" || link.id === "contact"
                               ? link.id === "home"

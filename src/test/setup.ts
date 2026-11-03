@@ -1,6 +1,6 @@
-import { expect, afterEach, beforeEach, vi } from 'vitest';
-import { cleanup } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
+import * as matchers from "@testing-library/jest-dom/matchers";
+import { cleanup } from "@testing-library/react";
+import { afterEach, beforeEach, expect, vi } from "vitest";
 
 // Extend Vitest's expect with jest-dom matchers
 expect.extend(matchers);
@@ -12,9 +12,11 @@ beforeEach(() => {
     observe() {}
     unobserve() {}
     disconnect() {}
-    takeRecords() { return []; }
+    takeRecords() {
+      return [];
+    }
     root = null;
-    rootMargin = '';
+    rootMargin = "";
     thresholds = [];
   } as any;
 });

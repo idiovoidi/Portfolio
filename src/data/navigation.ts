@@ -15,8 +15,17 @@ export const navLinks: NavLink[] = [
   { id: "music", label: "Music", href: "#music", group: "art" },
   { id: "videos", label: "Videos", href: "#videos", group: "art" },
   { id: "three-d", label: "3D", href: "#three-d", group: "art" },
-  { id: "commercial", label: "Commercial", href: "#commercial", group: "commercial" },
+  {
+    id: "commercial",
+    label: "Commercial",
+    href: "#commercial",
+    group: "commercial",
+  },
   { id: "skills", label: "Skills", href: "#skills" },
-  { id: "software-experience", label: "Software Experience", href: "#software-experience" },
+  {
+    id: "software-experience",
+    label: "Software Experience",
+    href: "#software-experience",
+  },
   { id: "contact", label: "Contact", href: "#contact" },
 ];

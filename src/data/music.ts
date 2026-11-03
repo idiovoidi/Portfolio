@@ -4,7 +4,8 @@ export interface SpotifyTrack {
   title?: string;
 }
 
-export const spotifyArtistUrl = "https://open.spotify.com/artist/1haA9Lfr8e35mJlalAbPFz";
+export const spotifyArtistUrl =
+  "https://open.spotify.com/artist/1haA9Lfr8e35mJlalAbPFz";
 
 export const spotifyTracks: SpotifyTrack[] = [
   {

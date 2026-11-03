@@ -9,12 +9,18 @@
  * Supports Unity-style MetallicSmoothness maps (R=metalness, A=smoothness).
  */
 
-import { readFileSync, writeFileSync, existsSync, statSync, readdirSync } from "fs";
-import { resolve, join, extname, basename } from "path";
+import { createCanvas, Image, loadImage } from "canvas";
+import {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from "fs";
 import { JSDOM } from "jsdom";
-import { createCanvas, loadImage, Image } from "canvas";
+import { basename, extname, join, resolve } from "path";
 import * as THREE from "three";
-import { GLTFLoader, GLTFExporter } from "three-stdlib";
+import { GLTFExporter, GLTFLoader } from "three-stdlib";
 
 const dom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
 global.window = dom.window;
@@ -26,7 +32,9 @@ global.HTMLImageElement = Image;
 
 const args = process.argv.slice(2);
 if (args.length < 2) {
-  console.error("Usage: node scripts/apply-textures-to-glb.js <model.glb> <texture-folder> [output.glb]");
+  console.error(
+    "Usage: node scripts/apply-textures-to-glb.js <model.glb> <texture-folder> [output.glb]",
+  );
   process.exit(1);
 }
 
@@ -68,9 +76,17 @@ function categorizeTextures(files) {
     const lower = file.toLowerCase();
     const fullPath = join(textureFolderPath, file);
 
-    if (lower.includes("metallicsmoothness") || lower.includes("metallic_smoothness")) {
+    if (
+      lower.includes("metallicsmoothness") ||
+      lower.includes("metallic_smoothness")
+    ) {
       textures.metallicSmoothness = fullPath;
-    } else if (lower.includes("albedo") || lower.includes("diffuse") || lower.includes("basecolor") || lower.includes("base_color")) {
+    } else if (
+      lower.includes("albedo") ||
+      lower.includes("diffuse") ||
+      lower.includes("basecolor") ||
+      lower.includes("base_color")
+    ) {
       textures.albedo = fullPath;
     } else if (lower.includes("normal")) {
       textures.normal = fullPath;
@@ -80,7 +96,11 @@ function categorizeTextures(files) {
       textures.roughness = fullPath;
     } else if (lower.includes("emission") || lower.includes("emissive")) {
       textures.emission = fullPath;
-    } else if (lower.includes("ao") || lower.includes("occlusion") || lower.includes("ambient")) {
+    } else if (
+      lower.includes("ao") ||
+      lower.includes("occlusion") ||
+      lower.includes("ambient")
+    ) {
       textures.ao = fullPath;
     } else if (lower.includes("transparency") && !textures.albedo) {
       // e.g. AlbedoTransparency.png fallback if albedo key missed
@@ -91,7 +111,10 @@ function categorizeTextures(files) {
   return textures;
 }
 
-async function imageToTexture(imagePath, { colorSpace = THREE.NoColorSpace, flipY = false } = {}) {
+async function imageToTexture(
+  imagePath,
+  { colorSpace = THREE.NoColorSpace, flipY = false } = {},
+) {
   const img = await loadImage(imagePath);
   let width = img.width;
   let height = img.height;
@@ -175,7 +198,10 @@ function parseGlb(buffer) {
   return new Promise((resolvePromise, reject) => {
     const loader = new GLTFLoader();
     loader.parse(
-      buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength),
+      buffer.buffer.slice(
+        buffer.byteOffset,
+        buffer.byteOffset + buffer.byteLength,
+      ),
       "",
       resolvePromise,
       reject,
@@ -268,7 +294,9 @@ async function main() {
   gltf.scene.traverse((child) => {
     if (!child.isMesh || !child.material) return;
 
-    const materials = Array.isArray(child.material) ? child.material : [child.material];
+    const materials = Array.isArray(child.material)
+      ? child.material
+      : [child.material];
     const next = materials.map((mat) => {
       const material =
         mat instanceof THREE.MeshStandardMaterial

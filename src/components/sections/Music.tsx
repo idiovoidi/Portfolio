@@ -1,31 +1,34 @@
 import { motion } from "framer-motion";
+import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import { spotifyArtistUrl, spotifyTracks } from "../../data/music";
-import { Section } from "../ui/Section";
-import { TextEffect } from "../ui/TextEffect";
 import { useInView } from "../../hooks";
 import { createFadeInUp, revealState } from "../../utils/animations";
-import { usePerformanceSettings } from "../../contexts/PerformanceContext";
+import { Section } from "../ui/Section";
+import { TextEffect } from "../ui/TextEffect";
 
 const MusicBackground = () => (
   <div className="absolute inset-0 pointer-events-none">
     <div
       className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full opacity-20"
       style={{
-        background: "radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%)",
+        background:
+          "radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%)",
         animation: "musicPulse 2s ease-in-out infinite",
       }}
     />
     <div
       className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full opacity-15"
       style={{
-        background: "radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)",
+        background:
+          "radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)",
         animation: "musicPulse 2.5s ease-in-out infinite 0.3s",
       }}
     />
     <div
       className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full opacity-10"
       style={{
-        background: "radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)",
+        background:
+          "radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)",
         animation: "musicPulse 3s ease-in-out infinite 0.6s",
       }}
     />
@@ -57,7 +60,11 @@ export const Music = () => {
       subtitle={
         <p className="section-subheading max-w-2xl mx-auto">
           Sounds from the{" "}
-          <TextEffect effect="flicker" className="font-bold" style={{ color: "var(--color-primary)" }}>
+          <TextEffect
+            effect="flicker"
+            className="font-bold"
+            style={{ color: "var(--color-primary)" }}
+          >
             VOID
           </TextEffect>
         </p>

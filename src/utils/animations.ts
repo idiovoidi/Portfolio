@@ -3,14 +3,14 @@
  * All animations respect prefers-reduced-motion media query
  */
 
-import { Variants } from 'framer-motion';
+import type { Variants } from "framer-motion";
 
 /**
  * Check if user prefers reduced motion
  */
 export const prefersReducedMotion = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
 /**
@@ -22,26 +22,29 @@ export const getAnimationDuration = (duration: number): number => {
 };
 
 /** Show the final frame immediately when motion is disabled. */
-export const revealState = (inView: boolean, animationsEnabled: boolean): 'initial' | 'animate' => {
-  if (!animationsEnabled || prefersReducedMotion()) return 'animate';
-  return inView ? 'animate' : 'initial';
+export const revealState = (
+  inView: boolean,
+  animationsEnabled: boolean,
+): "initial" | "animate" => {
+  if (!animationsEnabled || prefersReducedMotion()) return "animate";
+  return inView ? "animate" : "initial";
 };
 
 /**
  * Fade in from bottom animation variant
  */
 export const fadeInUp: Variants = {
-  initial: { 
-    opacity: 0, 
-    y: 30 
+  initial: {
+    opacity: 0,
+    y: 30,
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     y: 0,
     transition: {
       duration: getAnimationDuration(0.6),
-      ease: 'easeOut',
-    }
+      ease: "easeOut",
+    },
   },
 };
 
@@ -49,15 +52,15 @@ export const fadeInUp: Variants = {
  * Fade in animation variant
  */
 export const fadeIn: Variants = {
-  initial: { 
-    opacity: 0 
+  initial: {
+    opacity: 0,
   },
-  animate: { 
+  animate: {
     opacity: 1,
     transition: {
       duration: getAnimationDuration(0.6),
-      ease: 'easeOut',
-    }
+      ease: "easeOut",
+    },
   },
 };
 
@@ -65,17 +68,17 @@ export const fadeIn: Variants = {
  * Scale in animation variant
  */
 export const scaleIn: Variants = {
-  initial: { 
-    opacity: 0, 
-    scale: 0.9 
+  initial: {
+    opacity: 0,
+    scale: 0.9,
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     scale: 1,
     transition: {
       duration: 0.4,
-      ease: 'easeOut',
-    }
+      ease: "easeOut",
+    },
   },
 };
 
@@ -88,7 +91,7 @@ export const staggerContainer: Variants = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2,
-    }
+    },
   },
 };
 
@@ -96,17 +99,17 @@ export const staggerContainer: Variants = {
  * Slide in from left animation variant
  */
 export const slideInLeft: Variants = {
-  initial: { 
-    opacity: 0, 
-    x: -30 
+  initial: {
+    opacity: 0,
+    x: -30,
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     x: 0,
     transition: {
       duration: getAnimationDuration(0.6),
-      ease: 'easeOut',
-    }
+      ease: "easeOut",
+    },
   },
 };
 
@@ -114,17 +117,17 @@ export const slideInLeft: Variants = {
  * Slide in from right animation variant
  */
 export const slideInRight: Variants = {
-  initial: { 
-    opacity: 0, 
-    x: 30 
+  initial: {
+    opacity: 0,
+    x: 30,
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     x: 0,
     transition: {
       duration: getAnimationDuration(0.6),
-      ease: 'easeOut',
-    }
+      ease: "easeOut",
+    },
   },
 };
 
@@ -135,8 +138,8 @@ export const hoverScale = {
   scale: 1.05,
   transition: {
     duration: 0.2,
-    ease: 'easeInOut',
-  }
+    ease: "easeInOut",
+  },
 };
 
 /**
@@ -146,26 +149,26 @@ export const hoverLift = {
   y: -8,
   transition: {
     duration: 0.3,
-    ease: 'easeOut',
-  }
+    ease: "easeOut",
+  },
 };
 
 /**
  * Create a custom fade in up variant with configurable delay
  */
 export const createFadeInUp = (delay: number = 0): Variants => ({
-  initial: { 
-    opacity: 0, 
-    y: 30 
+  initial: {
+    opacity: 0,
+    y: 30,
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     y: 0,
     transition: {
       duration: getAnimationDuration(0.6),
       delay,
-      ease: 'easeOut',
-    }
+      ease: "easeOut",
+    },
   },
 });
 
@@ -174,6 +177,6 @@ export const createFadeInUp = (delay: number = 0): Variants => ({
  */
 export const defaultViewport = {
   once: true,
-  margin: '-50px',
+  margin: "-50px",
   amount: 0.1,
 };

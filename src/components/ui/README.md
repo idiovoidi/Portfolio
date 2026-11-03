@@ -5,6 +5,7 @@ This directory contains reusable UI components for the developer portfolio.
 ## Components
 
 ### Button
+
 A versatile button component with multiple variants and states.
 
 **Features:**
@@ -29,6 +30,7 @@ import { Button } from '@/components/ui';
 ```
 
 ### SocialLinks
+
 Displays social media links with icons and hover animations.
 
 **Features:**
@@ -40,18 +42,19 @@ Displays social media links with icons and hover animations.
 
 **Usage:**
 ```tsx
-import { SocialLinks } from '@/components/ui';
+import { SocialLinks } from "@/components/ui";
 
 const links = [
-  { platform: 'github', url: 'https://github.com/username' },
-  { platform: 'linkedin', url: 'https://linkedin.com/in/username' },
-  { platform: 'email', url: 'contact@example.com' },
+  { platform: "github", url: "https://github.com/username" },
+  { platform: "linkedin", url: "https://linkedin.com/in/username" },
+  { platform: "email", url: "contact@example.com" },
 ];
 
-<SocialLinks links={links} iconSize={24} />
+<SocialLinks links={links} iconSize={24} />;
 ```
 
 ### Lightbox
+
 Modal component for displaying full-size images in an overlay.
 
 **Features:**
@@ -65,7 +68,7 @@ Modal component for displaying full-size images in an overlay.
 
 **Usage:**
 ```tsx
-import { Lightbox } from '@/components/ui';
+import { Lightbox } from "@/components/ui";
 
 const [isOpen, setIsOpen] = useState(false);
 
@@ -75,10 +78,11 @@ const [isOpen, setIsOpen] = useState(false);
   imageSrc="/path/to/image.jpg"
   imageAlt="Artwork description"
   title="Artwork Title"
-/>
+/>;
 ```
 
 ### EmbeddedDemo
+
 Component for displaying embedded content (games, demos) in an iframe.
 
 **Features:**
@@ -92,7 +96,7 @@ Component for displaying embedded content (games, demos) in an iframe.
 
 **Usage:**
 ```tsx
-import { EmbeddedDemo } from '@/components/ui';
+import { EmbeddedDemo } from "@/components/ui";
 
 const [isOpen, setIsOpen] = useState(false);
 
@@ -102,7 +106,7 @@ const [isOpen, setIsOpen] = useState(false);
   embedUrl="https://example.com/game"
   title="Tower Defense Game"
   aspectRatio="16:9"
-/>
+/>;
 ```
 
 ## Accessibility

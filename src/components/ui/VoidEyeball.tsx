@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 type MiniPulse = { id: number };
 
@@ -264,8 +270,15 @@ const VoidEyeball: React.FC = () => {
                 >
                   <motion.div
                     initial={{ scale: 0.55, opacity: 0 }}
-                    animate={{ scale: [0.55, 1.55, 1.05], opacity: [0, 0.7, 0] }}
-                    transition={{ duration: 0.85, ease: "easeOut", times: [0, 0.4, 1] }}
+                    animate={{
+                      scale: [0.55, 1.55, 1.05],
+                      opacity: [0, 0.7, 0],
+                    }}
+                    transition={{
+                      duration: 0.85,
+                      ease: "easeOut",
+                      times: [0, 0.4, 1],
+                    }}
                     onAnimationComplete={() => dismissMiniPulse(pulse.id)}
                     style={{
                       position: "absolute",
@@ -295,7 +308,11 @@ const VoidEyeball: React.FC = () => {
                   <motion.div
                     initial={{ scale: 1, opacity: 0.4 }}
                     animate={{ scale: [1, 1.28, 1], opacity: [0.4, 0.85, 0] }}
-                    transition={{ duration: 0.7, ease: "easeOut", times: [0, 0.35, 1] }}
+                    transition={{
+                      duration: 0.7,
+                      ease: "easeOut",
+                      times: [0, 0.35, 1],
+                    }}
                     style={{
                       position: "absolute",
                       inset: "8%",

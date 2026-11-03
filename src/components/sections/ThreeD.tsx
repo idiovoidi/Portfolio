@@ -1,13 +1,18 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { threeDWorks, type ThreeDWork } from "../../data/threeD";
-import { ModelViewer } from "../ui/ModelViewer";
+import { usePerformanceSettings } from "../../contexts/PerformanceContext";
+import { type ThreeDWork, threeDWorks } from "../../data/threeD";
+import { useInView } from "../../hooks";
+import {
+  createFadeInUp,
+  fadeIn,
+  revealState,
+  scaleIn,
+} from "../../utils/animations";
 import { DimensionBackground } from "../ui/DimensionBackground";
+import { ModelViewer } from "../ui/ModelViewer";
 import { Section } from "../ui/Section";
 import { TextEffect } from "../ui/TextEffect";
-import { useInView } from "../../hooks";
-import { createFadeInUp, fadeIn, revealState, scaleIn } from "../../utils/animations";
-import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 
 export const ThreeD = () => {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -26,13 +31,20 @@ export const ThreeD = () => {
       }
       subtitle={
         <p className="section-subheading max-w-2xl mx-auto">
-          <TextEffect effect="flicker" className="font-bold" style={{ color: "#00D9FF" }}>
+          <TextEffect
+            effect="flicker"
+            className="font-bold"
+            style={{ color: "#00D9FF" }}
+          >
             Dimensional creations from the void
           </TextEffect>
         </p>
       }
     >
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      <div
+        ref={ref}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+      >
         {threeDWorks.map((work, index) => (
           <motion.div
             key={work.id}
@@ -57,12 +69,18 @@ export const ThreeD = () => {
                 )}
               </div>
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-cyan-400 mb-1">{work.title}</h3>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-1">
+                  {work.title}
+                </h3>
                 {work.category && (
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">{work.category}</span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+                    {work.category}
+                  </span>
                 )}
                 {work.description && (
-                  <p className="text-sm text-gray-400 mt-2">{work.description}</p>
+                  <p className="text-sm text-gray-400 mt-2">
+                    {work.description}
+                  </p>
                 )}
               </div>
             </div>
@@ -93,9 +111,13 @@ export const ThreeD = () => {
               ✕
             </button>
             <div className="absolute top-4 left-4 z-10 bg-black/60 px-4 py-3 rounded-lg border border-cyan-500/30">
-              <h3 className="text-xl font-bold text-cyan-400 mb-1">{selectedModel.title}</h3>
+              <h3 className="text-xl font-bold text-cyan-400 mb-1">
+                {selectedModel.title}
+              </h3>
               {selectedModel.description && (
-                <p className="text-sm text-gray-400">{selectedModel.description}</p>
+                <p className="text-sm text-gray-400">
+                  {selectedModel.description}
+                </p>
               )}
             </div>
             <ModelViewer

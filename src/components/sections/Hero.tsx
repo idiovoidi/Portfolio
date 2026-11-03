@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { personalInfo } from "../../data/personal";
 import { FiChevronDown } from "react-icons/fi";
+import { personalInfo } from "../../data/personal";
 import VoidEyeball from "../ui/VoidEyeball";
 
 export const Hero = () => {

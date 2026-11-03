@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader, OrbitControls, RoomEnvironment } from "three-stdlib";
 import type { ModelTextures } from "../../data/threeD";
@@ -107,7 +107,11 @@ const applyTexturesToObject = async (
     disposable.push(maps.normalMap);
   }
   if (textures.emission) {
-    maps.emissiveMap = await loadTexture(loader, textures.emission, THREE.SRGBColorSpace);
+    maps.emissiveMap = await loadTexture(
+      loader,
+      textures.emission,
+      THREE.SRGBColorSpace,
+    );
     disposable.push(maps.emissiveMap);
   }
   if (textures.ao) {
@@ -136,13 +140,17 @@ const applyTexturesToObject = async (
   root.traverse((child) => {
     if (!(child instanceof THREE.Mesh) || !child.material) return;
 
-    const materials = Array.isArray(child.material) ? child.material : [child.material];
+    const materials = Array.isArray(child.material)
+      ? child.material
+      : [child.material];
     const next = materials.map((mat) => {
       const material =
         mat instanceof THREE.MeshStandardMaterial
           ? mat
           : new THREE.MeshStandardMaterial({
-              color: (mat as THREE.MeshStandardMaterial).color?.clone?.() ?? 0xffffff,
+              color:
+                (mat as THREE.MeshStandardMaterial).color?.clone?.() ??
+                0xffffff,
             });
 
       if (maps.map) material.map = maps.map;
@@ -258,7 +266,8 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
       object.position.sub(center);
 
-      const fitDist = maxDim / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+      const fitDist =
+        maxDim / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
       camera.position.set(0, maxDim * 0.15, fitDist * 1.55);
       camera.near = maxDim / 100;
       camera.far = maxDim * 100;
@@ -305,7 +314,11 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
         try {
           if (parsedTextures) {
-            await applyTexturesToObject(gltf.scene, parsedTextures, disposableTextures);
+            await applyTexturesToObject(
+              gltf.scene,
+              parsedTextures,
+              disposableTextures,
+            );
           }
           if (disposed) return;
 
@@ -398,7 +411,9 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               className="relative w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full mx-auto mb-3"
             />
-            <p className="relative text-cyan-400 text-sm">Loading 3D model...</p>
+            <p className="relative text-cyan-400 text-sm">
+              Loading 3D model...
+            </p>
           </div>
         </motion.div>
       )}
@@ -407,7 +422,9 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
         <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-lg z-10">
           <div className="text-center p-4">
             <p className="text-red-400 text-sm mb-2">{error}</p>
-            <p className="text-gray-500 text-xs">Unable to display this model</p>
+            <p className="text-gray-500 text-xs">
+              Unable to display this model
+            </p>
           </div>
         </div>
       )}

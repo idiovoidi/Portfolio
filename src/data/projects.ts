@@ -198,7 +198,7 @@ export const projects: Project[] = [
 
 // Helper function to get projects by category
 export const getProjectsByCategory = (
-  category: Project["category"]
+  category: Project["category"],
 ): Project[] => {
   return projects.filter((project) => project.category === category);
 };

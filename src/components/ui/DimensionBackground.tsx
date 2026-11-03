@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import { prefersReducedMotion } from "../../utils/animations";
 
@@ -24,12 +24,66 @@ export const DimensionBackground = () => {
 
   const shapes = useMemo<WireShape[]>(
     () => [
-      { id: 0, x: 8, y: 18, size: 56, rotate: 12, kind: "cube", delay: 0, duration: 14 },
-      { id: 1, x: 78, y: 12, size: 44, rotate: -18, kind: "tetra", delay: 1.2, duration: 16 },
-      { id: 2, x: 86, y: 58, size: 64, rotate: 28, kind: "octa", delay: 0.6, duration: 18 },
-      { id: 3, x: 6, y: 62, size: 40, rotate: -8, kind: "cube", delay: 2, duration: 15 },
-      { id: 4, x: 48, y: 8, size: 32, rotate: 40, kind: "tetra", delay: 0.4, duration: 12 },
-      { id: 5, x: 62, y: 72, size: 48, rotate: -22, kind: "octa", delay: 1.8, duration: 17 },
+      {
+        id: 0,
+        x: 8,
+        y: 18,
+        size: 56,
+        rotate: 12,
+        kind: "cube",
+        delay: 0,
+        duration: 14,
+      },
+      {
+        id: 1,
+        x: 78,
+        y: 12,
+        size: 44,
+        rotate: -18,
+        kind: "tetra",
+        delay: 1.2,
+        duration: 16,
+      },
+      {
+        id: 2,
+        x: 86,
+        y: 58,
+        size: 64,
+        rotate: 28,
+        kind: "octa",
+        delay: 0.6,
+        duration: 18,
+      },
+      {
+        id: 3,
+        x: 6,
+        y: 62,
+        size: 40,
+        rotate: -8,
+        kind: "cube",
+        delay: 2,
+        duration: 15,
+      },
+      {
+        id: 4,
+        x: 48,
+        y: 8,
+        size: 32,
+        rotate: 40,
+        kind: "tetra",
+        delay: 0.4,
+        duration: 12,
+      },
+      {
+        id: 5,
+        x: 62,
+        y: 72,
+        size: 48,
+        rotate: -22,
+        kind: "octa",
+        delay: 1.8,
+        duration: 17,
+      },
     ],
     [],
   );
@@ -47,7 +101,10 @@ export const DimensionBackground = () => {
   );
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      aria-hidden
+    >
       {/* Void base — cyan/slate, matches 3D card accents */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-[#020617] to-black" />
       <div
@@ -72,7 +129,8 @@ export const DimensionBackground = () => {
           backgroundSize: "42px 42px",
           transform: "perspective(560px) rotateX(56deg) scale(1.4)",
           transformOrigin: "center bottom",
-          maskImage: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.45) 40%, transparent 78%)",
+          maskImage:
+            "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.45) 40%, transparent 78%)",
           WebkitMaskImage:
             "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.45) 40%, transparent 78%)",
           opacity: 0.7,
@@ -186,7 +244,10 @@ export const DimensionBackground = () => {
 const Wireframe = ({ kind }: { kind: WireShape["kind"] }) => {
   if (kind === "cube") {
     return (
-      <svg viewBox="0 0 64 64" className="h-full w-full drop-shadow-[0_0_8px_rgba(0,217,255,0.35)]">
+      <svg
+        viewBox="0 0 64 64"
+        className="h-full w-full drop-shadow-[0_0_8px_rgba(0,217,255,0.35)]"
+      >
         <g fill="none" stroke="rgba(0,217,255,0.55)" strokeWidth="1.2">
           <path d="M12 24 L32 12 L52 24 L52 44 L32 56 L12 44 Z" />
           <path d="M12 24 L32 36 L52 24" />
@@ -198,7 +259,10 @@ const Wireframe = ({ kind }: { kind: WireShape["kind"] }) => {
 
   if (kind === "tetra") {
     return (
-      <svg viewBox="0 0 64 64" className="h-full w-full drop-shadow-[0_0_8px_rgba(0,217,255,0.35)]">
+      <svg
+        viewBox="0 0 64 64"
+        className="h-full w-full drop-shadow-[0_0_8px_rgba(0,217,255,0.35)]"
+      >
         <g fill="none" stroke="rgba(0,217,255,0.5)" strokeWidth="1.2">
           <path d="M32 8 L56 52 L8 52 Z" />
           <path d="M32 8 L32 52" />
@@ -209,7 +273,10 @@ const Wireframe = ({ kind }: { kind: WireShape["kind"] }) => {
   }
 
   return (
-    <svg viewBox="0 0 64 64" className="h-full w-full drop-shadow-[0_0_8px_rgba(0,217,255,0.35)]">
+    <svg
+      viewBox="0 0 64 64"
+      className="h-full w-full drop-shadow-[0_0_8px_rgba(0,217,255,0.35)]"
+    >
       <g fill="none" stroke="rgba(56,189,248,0.5)" strokeWidth="1.2">
         <path d="M32 4 L56 32 L32 60 L8 32 Z" />
         <path d="M8 32 L56 32" />

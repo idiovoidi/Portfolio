@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import type React from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export interface ContactFormData {
   name: string;
@@ -13,7 +14,10 @@ export interface ContactFormProps {
   isSubmitting?: boolean;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = false }) => {
+const ContactForm: React.FC<ContactFormProps> = ({
+  onSubmit,
+  isSubmitting = false,
+}) => {
   const {
     register,
     handleSubmit,
@@ -21,22 +25,24 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = fals
     reset,
   } = useForm<ContactFormData>();
 
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
   const onSubmitForm = async (data: ContactFormData) => {
     try {
-      setSubmitStatus('idle');
+      setSubmitStatus("idle");
       await onSubmit(data);
-      setSubmitStatus('success');
+      setSubmitStatus("success");
       reset();
-      
+
       // Clear success message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      setTimeout(() => setSubmitStatus("idle"), 5000);
     } catch (error) {
-      setSubmitStatus('error');
-      
+      setSubmitStatus("error");
+
       // Clear error message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      setTimeout(() => setSubmitStatus("idle"), 5000);
     }
   };
 
@@ -44,28 +50,28 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = fals
     <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
       {/* Name Field */}
       <div>
-        <label 
-          htmlFor="name" 
+        <label
+          htmlFor="name"
           className="block text-sm font-medium mb-2"
-          style={{ color: 'var(--color-text-primary)' }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           Name <span className="text-red-500">*</span>
         </label>
         <input
           id="name"
           type="text"
-          {...register('name', {
-            required: 'Name is required',
+          {...register("name", {
+            required: "Name is required",
             minLength: {
               value: 2,
-              message: 'Name must be at least 2 characters',
+              message: "Name must be at least 2 characters",
             },
           })}
           className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2"
           style={{
-            backgroundColor: 'var(--color-background)',
-            borderColor: errors.name ? '#ef4444' : 'var(--color-border)',
-            color: 'var(--color-text-primary)',
+            backgroundColor: "var(--color-background)",
+            borderColor: errors.name ? "#ef4444" : "var(--color-border)",
+            color: "var(--color-text-primary)",
           }}
           placeholder="Your name"
           disabled={isSubmitting}
@@ -83,28 +89,28 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = fals
 
       {/* Email Field */}
       <div>
-        <label 
-          htmlFor="email" 
+        <label
+          htmlFor="email"
           className="block text-sm font-medium mb-2"
-          style={{ color: 'var(--color-text-primary)' }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           Email <span className="text-red-500">*</span>
         </label>
         <input
           id="email"
           type="email"
-          {...register('email', {
-            required: 'Email is required',
+          {...register("email", {
+            required: "Email is required",
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Invalid email address',
+              message: "Invalid email address",
             },
           })}
           className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2"
           style={{
-            backgroundColor: 'var(--color-background)',
-            borderColor: errors.email ? '#ef4444' : 'var(--color-border)',
-            color: 'var(--color-text-primary)',
+            backgroundColor: "var(--color-background)",
+            borderColor: errors.email ? "#ef4444" : "var(--color-border)",
+            color: "var(--color-text-primary)",
           }}
           placeholder="your.email@example.com"
           disabled={isSubmitting}
@@ -122,28 +128,28 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = fals
 
       {/* Message Field */}
       <div>
-        <label 
-          htmlFor="message" 
+        <label
+          htmlFor="message"
           className="block text-sm font-medium mb-2"
-          style={{ color: 'var(--color-text-primary)' }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           Message <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
           rows={6}
-          {...register('message', {
-            required: 'Message is required',
+          {...register("message", {
+            required: "Message is required",
             minLength: {
               value: 10,
-              message: 'Message must be at least 10 characters',
+              message: "Message must be at least 10 characters",
             },
           })}
           className="w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 resize-none"
           style={{
-            backgroundColor: 'var(--color-background)',
-            borderColor: errors.message ? '#ef4444' : 'var(--color-border)',
-            color: 'var(--color-text-primary)',
+            backgroundColor: "var(--color-background)",
+            borderColor: errors.message ? "#ef4444" : "var(--color-border)",
+            color: "var(--color-text-primary)",
           }}
           placeholder="Your message..."
           disabled={isSubmitting}
@@ -167,9 +173,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = fals
         whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
         className="w-full px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2"
         style={{
-          backgroundColor: isSubmitting ? 'var(--color-text-secondary)' : 'var(--color-primary)',
-          color: '#ffffff',
-          cursor: isSubmitting ? 'not-allowed' : 'pointer',
+          backgroundColor: isSubmitting
+            ? "var(--color-text-secondary)"
+            : "var(--color-primary)",
+          color: "#ffffff",
+          cursor: isSubmitting ? "not-allowed" : "pointer",
           opacity: isSubmitting ? 0.7 : 1,
         }}
       >
@@ -198,32 +206,32 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, isSubmitting = fals
             Sending...
           </>
         ) : (
-          'Send Message'
+          "Send Message"
         )}
       </motion.button>
 
       {/* Success/Error Messages */}
-      {submitStatus === 'success' && (
+      {submitStatus === "success" && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="p-4 rounded-lg"
-          style={{ backgroundColor: '#10b98133', border: '1px solid #10b981' }}
+          style={{ backgroundColor: "#10b98133", border: "1px solid #10b981" }}
         >
-          <p className="text-sm" style={{ color: '#10b981' }}>
+          <p className="text-sm" style={{ color: "#10b981" }}>
             ✓ Message sent successfully! I'll get back to you soon.
           </p>
         </motion.div>
       )}
 
-      {submitStatus === 'error' && (
+      {submitStatus === "error" && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="p-4 rounded-lg"
-          style={{ backgroundColor: '#ef444433', border: '1px solid #ef4444' }}
+          style={{ backgroundColor: "#ef444433", border: "1px solid #ef4444" }}
         >
-          <p className="text-sm" style={{ color: '#ef4444' }}>
+          <p className="text-sm" style={{ color: "#ef4444" }}>
             ✗ Failed to send message. Please try again or email me directly.
           </p>
         </motion.div>

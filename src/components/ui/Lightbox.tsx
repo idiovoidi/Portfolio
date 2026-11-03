@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { IoClose } from 'react-icons/io5';
+import type React from "react";
+import { useEffect } from "react";
+import { IoClose } from "react-icons/io5";
 
 export interface LightboxProps {
   isOpen: boolean;
@@ -17,7 +18,7 @@ const Lightbox: React.FC<LightboxProps> = ({
   isOpen,
   onClose,
   imageSrc,
-  imageAlt = 'Lightbox image',
+  imageAlt = "Lightbox image",
   title,
   embedUrl,
   nftUrl,
@@ -25,19 +26,19 @@ const Lightbox: React.FC<LightboxProps> = ({
 }) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
 
       const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
+        if (e.key === "Escape") {
           onClose();
         }
       };
 
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
 
       return () => {
-        document.body.style.overflow = 'unset';
-        document.removeEventListener('keydown', handleEscape);
+        document.body.style.overflow = "unset";
+        document.removeEventListener("keydown", handleEscape);
       };
     }
   }, [isOpen, onClose]);
@@ -56,7 +57,7 @@ const Lightbox: React.FC<LightboxProps> = ({
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
-      aria-label={videoSrc ? 'Video lightbox' : 'Image lightbox'}
+      aria-label={videoSrc ? "Video lightbox" : "Image lightbox"}
     >
       <button
         onClick={onClose}
@@ -74,11 +75,14 @@ const Lightbox: React.FC<LightboxProps> = ({
         )}
 
         {embedUrl ? (
-          <div className="w-full max-w-4xl flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="w-full max-w-4xl flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             <iframe
               src={embedUrl}
               className="w-full aspect-square max-h-[70vh] rounded-lg shadow-2xl border-2 border-accent-primary/30"
-              title={title || 'NFT Artwork'}
+              title={title || "NFT Artwork"}
               loading="lazy"
               sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

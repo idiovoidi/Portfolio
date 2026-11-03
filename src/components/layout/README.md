@@ -16,7 +16,7 @@ The `Header` component provides a fixed navigation bar at the top of the page wi
 
 **Usage:**
 ```tsx
-import { Header } from './components/layout';
+import { Header } from "./components/layout";
 
 function App() {
   return (
@@ -45,10 +45,10 @@ The `Navigation` component handles both desktop and mobile navigation with smoot
 The navigation links are defined in the component and can be customized:
 ```tsx
 const navLinks: NavLink[] = [
-  { id: 'home', label: 'Home', href: '#home' },
-  { id: 'projects', label: 'Projects', href: '#projects' },
-  { id: 'skills', label: 'Skills', href: '#skills' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
+  { id: "home", label: "Home", href: "#home" },
+  { id: "projects", label: "Projects", href: "#projects" },
+  { id: "skills", label: "Skills", href: "#skills" },
+  { id: "contact", label: "Contact", href: "#contact" },
 ];
 ```
 
@@ -67,9 +67,9 @@ A custom hook that tracks which section is currently in view based on scroll pos
 
 **Usage:**
 ```tsx
-import { useScrollSpy } from '../../hooks';
+import { useScrollSpy } from "../../hooks";
 
-const activeSection = useScrollSpy(['home', 'projects', 'skills', 'contact']);
+const activeSection = useScrollSpy(["home", "projects", "skills", "contact"]);
 ```
 
 **Parameters:**

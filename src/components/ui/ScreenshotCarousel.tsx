@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { ProjectScreenshot } from "../../data/projects";
+import { AnimatePresence, motion } from "framer-motion";
+import type React from "react";
+import { useState } from "react";
+import { FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
+import type { ProjectScreenshot } from "../../data/projects";
 
 export interface ScreenshotCarouselProps {
   isOpen: boolean;

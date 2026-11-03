@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArtPiece } from "../../data/artworks";
+import type React from "react";
+import { useState } from "react";
+import type { ArtPiece } from "../../data/artworks";
 
 export interface ArtPieceCardProps {
   artwork: ArtPiece;
@@ -47,13 +48,17 @@ const ArtPieceCard: React.FC<ArtPieceCardProps> = ({
         {/* Soft ambient glow */}
         <motion.div
           className="absolute inset-0 rounded opacity-0 group-hover:opacity-100"
-          animate={isHovered ? {
-            boxShadow: [
-              "0 0 15px rgba(88, 28, 135, 0.3)",
-              "0 0 25px rgba(88, 28, 135, 0.4)",
-              "0 0 15px rgba(88, 28, 135, 0.3)",
-            ],
-          } : {}}
+          animate={
+            isHovered
+              ? {
+                  boxShadow: [
+                    "0 0 15px rgba(88, 28, 135, 0.3)",
+                    "0 0 25px rgba(88, 28, 135, 0.4)",
+                    "0 0 15px rgba(88, 28, 135, 0.3)",
+                  ],
+                }
+              : {}
+          }
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
 
@@ -115,10 +120,10 @@ const ArtPieceCard: React.FC<ArtPieceCardProps> = ({
               <h3 className="text-stone-100 font-bold text-lg mb-1 drop-shadow-[0_2px_8px_rgba(88,28,135,0.4)]">
                 {artwork.title}
               </h3>
-              
+
               {/* Medium */}
               <p className="text-stone-400 text-sm mb-2">{artwork.medium}</p>
-              
+
               {/* Tools badges - organic style */}
               <div className="flex flex-wrap gap-1">
                 {artwork.tools.slice(0, 3).map((tool) => (
@@ -145,7 +150,11 @@ const ArtPieceCard: React.FC<ArtPieceCardProps> = ({
                   opacity: [0.4, 0.8, 0.4],
                   scale: [1, 1.2, 1],
                 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
             </div>
           </div>

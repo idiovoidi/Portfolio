@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { FaYoutube } from "react-icons/fa";
+import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import { videos, youtubeChannelUrl } from "../../data/videos";
+import { useInView } from "../../hooks";
+import { createFadeInUp, revealState } from "../../utils/animations";
 import { CRTEffect } from "../ui/CRTEffect";
 import { Section } from "../ui/Section";
 import { TextEffect } from "../ui/TextEffect";
-import { useInView } from "../../hooks";
-import { createFadeInUp, revealState } from "../../utils/animations";
-import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 
 export const Videos = () => {
   const { ref, inView } = useInView({ threshold: 0.1, rootMargin: "200px" });
@@ -24,7 +24,11 @@ export const Videos = () => {
       }
       subtitle={
         <p className="section-subheading max-w-2xl mx-auto">
-          <TextEffect effect="flicker" className="font-bold" style={{ color: "#FF0000" }}>
+          <TextEffect
+            effect="flicker"
+            className="font-bold"
+            style={{ color: "#FF0000" }}
+          >
             Transmissions from the void
           </TextEffect>
         </p>
@@ -40,7 +44,10 @@ export const Videos = () => {
             className="relative group"
           >
             <div className="relative overflow-hidden rounded-lg bg-black/40 backdrop-blur-sm border border-red-500/20 hover:border-red-500/50 transition-all duration-300">
-              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <div
+                className="relative w-full"
+                style={{ paddingBottom: "56.25%" }}
+              >
                 {inView ? (
                   <iframe
                     src={`https://www.youtube.com/embed/${video.id}`}

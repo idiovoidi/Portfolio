@@ -30,7 +30,7 @@ import { TextEffect } from "../ui";
   <TextEffect effect="flicker" className="font-bold text-purple-400">
     flicker
   </TextEffect>
-</p>
+</p>;
 ```
 
 ### Glow Effect (for highlights)
@@ -38,7 +38,7 @@ import { TextEffect } from "../ui";
 ```tsx
 <TextEffect effect="glow" className="text-cyan-400">
   Glowing text
-</TextEffect>
+</TextEffect>;
 ```
 
 ### Pulse Effect (for attention)
@@ -46,7 +46,7 @@ import { TextEffect } from "../ui";
 ```tsx
 <TextEffect effect="pulse" as="span" className="text-pink-400">
   Pulsing text
-</TextEffect>
+</TextEffect>;
 ```
 
 ### Custom Styling
@@ -58,7 +58,7 @@ import { TextEffect } from "../ui";
   style={{ color: "var(--color-accent)" }}
 >
   Custom styled text
-</TextEffect>
+</TextEffect>;
 ```
 
 ## Props

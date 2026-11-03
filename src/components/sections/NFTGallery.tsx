@@ -1,15 +1,18 @@
 import type { FC } from "react";
-import { nfts, nftCollections } from "../../data/nfts";
+import { FiExternalLink } from "react-icons/fi";
+import { nftCollections, nfts } from "../../data/nfts";
 import { NFTCard } from "../ui/NFTCard";
 import { Section } from "../ui/Section";
-import { FiExternalLink } from "react-icons/fi";
 
 export const NFTGallery: FC = () => {
   return (
     <Section
       id="nft-gallery"
       title="NFT Collection"
-      sectionStyle={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 1400px' }}
+      sectionStyle={{
+        contentVisibility: "auto",
+        containIntrinsicSize: "auto 1400px",
+      }}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
         {nfts.map((nft) => (
@@ -53,7 +56,10 @@ export const NFTGallery: FC = () => {
                   <h4 className="text-lg font-semibold text-text-primary group-hover:text-purple-400 transition-colors duration-300">
                     {collection.name}
                   </h4>
-                  <FiExternalLink className="text-purple-400 shrink-0" size={20} />
+                  <FiExternalLink
+                    className="text-purple-400 shrink-0"
+                    size={20}
+                  />
                 </div>
               </div>
             </a>

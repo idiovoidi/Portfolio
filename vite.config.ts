@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   // Base path: '/' for Vercel, '/repo-name/' for GitHub Pages
-  base: '/',
+  base: "/",
   plugins: [
     react({
       // Disable fast refresh in production to avoid eval
@@ -29,6 +29,12 @@ export default defineConfig({
   },
   // Optimize dependencies
   optimizeDeps: {
-    include: ["react", "react-dom", "framer-motion", "react-hook-form", "react-icons"],
+    include: [
+      "react",
+      "react-dom",
+      "framer-motion",
+      "react-hook-form",
+      "react-icons",
+    ],
   },
 });

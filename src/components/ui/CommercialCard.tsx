@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import type { CommercialWork } from "../../data/commercial";
 import { commercialTagLabel } from "../../data/commercialTags";
 
@@ -49,9 +49,7 @@ const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
         }
       }}
       aria-label={
-        work.videoSrc
-          ? `Play ${work.title}`
-          : `View ${work.title} in full size`
+        work.videoSrc ? `Play ${work.title}` : `View ${work.title} in full size`
       }
       style={{
         filter: isHovered

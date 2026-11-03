@@ -106,4 +106,3 @@ export const commercialVideoItems: CommercialVideoManifestItem[] = [
     tools: ["Premiere", "After Effects"],
   },
 ];
-

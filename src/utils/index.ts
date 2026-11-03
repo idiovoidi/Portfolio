@@ -1,2 +1,6 @@
-export { sendContactEmail, mockSendEmail, isEmailServiceConfigured } from './emailService';
-export * from './animations';
+export * from "./animations";
+export {
+  isEmailServiceConfigured,
+  mockSendEmail,
+  sendContactEmail,
+} from "./emailService";

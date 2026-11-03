@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 /**
  * Custom hook to track which section is currently in view
@@ -6,8 +6,11 @@ import { useState, useEffect } from 'react';
  * @param offset - Offset from top of viewport (default: 150)
  * @returns The ID of the currently active section
  */
-export const useScrollSpy = (sectionIds: string[], offset: number = 150): string => {
-  const [activeSection, setActiveSection] = useState(sectionIds[0] || '');
+export const useScrollSpy = (
+  sectionIds: string[],
+  offset: number = 150,
+): string => {
+  const [activeSection, setActiveSection] = useState(sectionIds[0] || "");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,7 +22,10 @@ export const useScrollSpy = (sectionIds: string[], offset: number = 150): string
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
 
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(sectionId);
             break;
           }
@@ -28,8 +34,8 @@ export const useScrollSpy = (sectionIds: string[], offset: number = 150): string
     };
 
     handleScroll(); // Call once on mount
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [sectionIds, offset]);
 
   return activeSection;

@@ -1,16 +1,16 @@
-import type { CSSProperties, ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from '../../hooks';
-import { fadeInUp, revealState } from '../../utils/animations';
-import { usePerformanceSettings } from '../../contexts/PerformanceContext';
+import { motion } from "framer-motion";
+import type { CSSProperties, ReactNode } from "react";
+import { usePerformanceSettings } from "../../contexts/PerformanceContext";
+import { useInView } from "../../hooks";
+import { fadeInUp, revealState } from "../../utils/animations";
 
-export type SectionTone = 'background' | 'surface' | 'secondary' | 'light';
+export type SectionTone = "background" | "surface" | "secondary" | "light";
 
 const toneColor: Record<SectionTone, string> = {
-  background: 'var(--color-background)',
-  surface: 'var(--color-surface)',
-  secondary: 'var(--color-background-secondary)',
-  light: 'transparent',
+  background: "var(--color-background)",
+  surface: "var(--color-surface)",
+  secondary: "var(--color-background-secondary)",
+  light: "transparent",
 };
 
 export interface SectionProps {
@@ -29,14 +29,14 @@ export interface SectionProps {
 
 export const Section = ({
   id,
-  tone = 'background',
+  tone = "background",
   title,
   subtitle,
-  className = '',
+  className = "",
   sectionStyle,
-  containerClassName = '',
+  containerClassName = "",
   containerStyle,
-  headerClassName = 'text-center mb-12',
+  headerClassName = "text-center mb-12",
   background,
   children,
 }: SectionProps) => {
@@ -63,12 +63,12 @@ export const Section = ({
             animate={animate}
             className={headerClassName}
           >
-            {typeof title === 'string' ? (
+            {typeof title === "string" ? (
               <h2 className="section-heading">{title}</h2>
             ) : (
               title
             )}
-            {typeof subtitle === 'string' ? (
+            {typeof subtitle === "string" ? (
               <p className="section-subheading max-w-2xl mx-auto">{subtitle}</p>
             ) : (
               subtitle

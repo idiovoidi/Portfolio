@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import type React from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface PerformanceSettings {
   enableTiltEffect: boolean;
@@ -20,12 +27,14 @@ const defaultSettings: PerformanceSettings = {
   enableAnimations: true,
 };
 
-const PerformanceContext = createContext<PerformanceContextType | undefined>(undefined);
+const PerformanceContext = createContext<PerformanceContextType | undefined>(
+  undefined,
+);
 
 export const usePerformance = () => {
   const context = useContext(PerformanceContext);
   if (!context) {
-    throw new Error('usePerformance must be used within PerformanceProvider');
+    throw new Error("usePerformance must be used within PerformanceProvider");
   }
   return context;
 };
@@ -39,10 +48,12 @@ interface PerformanceProviderProps {
   children: ReactNode;
 }
 
-export const PerformanceProvider: React.FC<PerformanceProviderProps> = ({ children }) => {
+export const PerformanceProvider: React.FC<PerformanceProviderProps> = ({
+  children,
+}) => {
   const [settings, setSettings] = useState<PerformanceSettings>(() => {
     // Load from localStorage if available
-    const saved = localStorage.getItem('performanceSettings');
+    const saved = localStorage.getItem("performanceSettings");
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -55,21 +66,26 @@ export const PerformanceProvider: React.FC<PerformanceProviderProps> = ({ childr
 
   // Save to localStorage whenever settings change
   useEffect(() => {
-    localStorage.setItem('performanceSettings', JSON.stringify(settings));
+    localStorage.setItem("performanceSettings", JSON.stringify(settings));
   }, [settings]);
 
   // Detect performance issues
   const detectPerformanceIssues = (): boolean => {
     // Check if device is mobile
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
 
     // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     // Check hardware concurrency (CPU cores)
-    const lowEndDevice = navigator.hardwareConcurrency ? navigator.hardwareConcurrency < 4 : false;
+    const lowEndDevice = navigator.hardwareConcurrency
+      ? navigator.hardwareConcurrency < 4
+      : false;
 
     // Check device memory (if available)
     const deviceMemory = (navigator as any).deviceMemory;
@@ -82,7 +98,7 @@ export const PerformanceProvider: React.FC<PerformanceProviderProps> = ({ childr
   useEffect(() => {
     const hasPerformanceIssues = detectPerformanceIssues();
     if (hasPerformanceIssues) {
-      const saved = localStorage.getItem('performanceSettings');
+      const saved = localStorage.getItem("performanceSettings");
       // Only auto-disable if user hasn't manually set preferences
       if (!saved) {
         setSettings({
@@ -95,15 +111,24 @@ export const PerformanceProvider: React.FC<PerformanceProviderProps> = ({ childr
   }, []);
 
   const toggleTiltEffect = () => {
-    setSettings((prev) => ({ ...prev, enableTiltEffect: !prev.enableTiltEffect }));
+    setSettings((prev) => ({
+      ...prev,
+      enableTiltEffect: !prev.enableTiltEffect,
+    }));
   };
 
   const toggleParticles = () => {
-    setSettings((prev) => ({ ...prev, enableParticles: !prev.enableParticles }));
+    setSettings((prev) => ({
+      ...prev,
+      enableParticles: !prev.enableParticles,
+    }));
   };
 
   const toggleAnimations = () => {
-    setSettings((prev) => ({ ...prev, enableAnimations: !prev.enableAnimations }));
+    setSettings((prev) => ({
+      ...prev,
+      enableAnimations: !prev.enableAnimations,
+    }));
   };
 
   return (

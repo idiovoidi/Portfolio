@@ -39,11 +39,11 @@ export const isEmailServiceConfigured = (): boolean => {
  * @throws Error if EmailJS is not configured or sending fails
  */
 export const sendContactEmail = async (
-  formData: ContactFormData
+  formData: ContactFormData,
 ): Promise<void> => {
   if (!isEmailServiceConfigured()) {
     throw new Error(
-      "Email service is not configured. Please set up environment variables."
+      "Email service is not configured. Please set up environment variables.",
     );
   }
 
@@ -71,7 +71,7 @@ export const sendContactEmail = async (
       SERVICE_ID,
       TEMPLATE_ID,
       templateParams,
-      PUBLIC_KEY
+      PUBLIC_KEY,
     );
 
     if (response.status !== 200) {
@@ -88,7 +88,7 @@ export const sendContactEmail = async (
  * Use this when EmailJS is not configured
  */
 export const mockSendEmail = async (
-  formData: ContactFormData
+  formData: ContactFormData,
 ): Promise<void> => {
   console.log("Mock email sent:", formData);
 

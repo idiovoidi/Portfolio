@@ -1,11 +1,11 @@
-import type { CommercialTagId } from "./commercialTags";
 import {
-  MUSIC_PHOTOGRAPHY_DIR,
-  VIDEO_DIR,
   commercialPhotographyPaths,
   commercialVideoItems,
+  MUSIC_PHOTOGRAPHY_DIR,
   musicPhotographyFiles,
+  VIDEO_DIR,
 } from "./commercialManifests";
+import type { CommercialTagId } from "./commercialTags";
 
 /**
  * Commercial portfolio data.
@@ -61,7 +61,7 @@ const titleFromFilename = (filename: string): string =>
 const photoEntry = (
   pathSegments: string[],
   tags: CommercialTagId[],
-  overrides?: Partial<CommercialWork>
+  overrides?: Partial<CommercialWork>,
 ): CommercialWork => {
   const filename = pathSegments[pathSegments.length - 1];
   const pathKey = pathSegments.join("/");
@@ -80,7 +80,7 @@ const photoEntry = (
 
 const designEntry = (
   filename: string,
-  fields: Omit<CommercialWork, "image" | "fullImage" | "id"> & { id?: string }
+  fields: Omit<CommercialWork, "image" | "fullImage" | "id"> & { id?: string },
 ): CommercialWork => ({
   id: fields.id ?? slugify(filename),
   ...fields,
@@ -144,17 +144,19 @@ const designWorks: CommercialWork[] = [
 ];
 
 const musicPhotographyWorks = musicPhotographyFiles.map((file) =>
-  photoEntry([MUSIC_PHOTOGRAPHY_DIR, file], ["music-photography"])
+  photoEntry([MUSIC_PHOTOGRAPHY_DIR, file], ["music-photography"]),
 );
 
-const commercialPhotographyWorks = commercialPhotographyPaths.map((relativePath) => {
-  const segments = relativePath.split("/");
-  const isCostume = segments.includes("Costume");
-  const tags: CommercialTagId[] = isCostume
-    ? ["photography", "costume"]
-    : ["photography"];
-  return photoEntry(segments, tags);
-});
+const commercialPhotographyWorks = commercialPhotographyPaths.map(
+  (relativePath) => {
+    const segments = relativePath.split("/");
+    const isCostume = segments.includes("Costume");
+    const tags: CommercialTagId[] = isCostume
+      ? ["photography", "costume"]
+      : ["photography"];
+    return photoEntry(segments, tags);
+  },
+);
 
 const videoWorks: CommercialWork[] = commercialVideoItems.map((item) => {
   const pathSegments = [VIDEO_DIR, item.file];
@@ -193,7 +195,7 @@ export const commercialWorks: CommercialWork[] = [
 
 export const filterCommercialWorks = (
   works: CommercialWork[],
-  activeTag: CommercialTagId | "all"
+  activeTag: CommercialTagId | "all",
 ): CommercialWork[] => {
   if (activeTag === "all") return works;
   return works.filter((work) => work.tags.includes(activeTag));

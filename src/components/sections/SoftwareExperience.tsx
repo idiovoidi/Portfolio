@@ -1,30 +1,34 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { getActiveCategories, getSoftwareGroupedByLanguage, type SoftwareEntry } from '../../data/softwareData';
-import { Section } from '../ui/Section';
-import { SoftwareCard } from '../ui/SoftwareCard';
-import { useInView } from '../../hooks';
-import { fadeInUp, revealState } from '../../utils/animations';
-import { usePerformanceSettings } from '../../contexts/PerformanceContext';
+import { motion } from "framer-motion";
+import type React from "react";
+import { usePerformanceSettings } from "../../contexts/PerformanceContext";
+import {
+  getActiveCategories,
+  getSoftwareGroupedByLanguage,
+  type SoftwareEntry,
+} from "../../data/softwareData";
+import { useInView } from "../../hooks";
+import { fadeInUp, revealState } from "../../utils/animations";
+import { Section } from "../ui/Section";
+import { SoftwareCard } from "../ui/SoftwareCard";
 
 /**
  * SoftwareExperience Section Component
- * 
+ *
  * Displays software tools and technologies organized by category.
  * Libraries are visually grouped under their parent languages.
  * Implements scroll-triggered animations with staggered category groups.
- * 
+ *
  * Layout:
  * - Responsive grid: 1 column (mobile <768px), 2 columns (tablet 768-1024px), 3 columns (desktop ≥1024px)
  * - Maximum content width: 1280px
  * - Categories rendered in order defined in categoryConfig
  * - Libraries indented under parent languages for visual hierarchy
- * 
+ *
  * Styling:
  * - Dark void aesthetic with glowing purple accents
  * - Consistent with existing portfolio sections (Skills, Projects)
  * - Scroll-triggered animations using Framer Motion and useInView hook
- * 
+ *
  * Future Enhancement:
  * - onClick handler can be added to enable filtering of portfolio pieces by software
  */
@@ -40,28 +44,28 @@ export const SoftwareExperience: React.FC = () => {
       title="Software Experience"
       subtitle="Tools and technologies that power my creative journey across music, design, development, and more"
       headerClassName="text-center mb-16"
-      containerStyle={{ maxWidth: '1280px', margin: '0 auto' }}
+      containerStyle={{ maxWidth: "1280px", margin: "0 auto" }}
     >
+      {/* Render each category */}
+      {categories.map(({ category, title }, categoryIndex) => {
+        const { standalone, grouped } = getSoftwareGroupedByLanguage(category);
 
-        {/* Render each category */}
-        {categories.map(({ category, title }, categoryIndex) => {
-          const { standalone, grouped } = getSoftwareGroupedByLanguage(category);
-          
-          if (standalone.length === 0 && Object.keys(grouped).length === 0) return null;
+        if (standalone.length === 0 && Object.keys(grouped).length === 0)
+          return null;
 
-          return (
-            <CategorySection
-              key={category}
-              title={title}
-              standalone={standalone}
-              grouped={grouped}
-              categoryIndex={categoryIndex}
-              totalCategories={categories.length}
-              categoryVariants={fadeInUp}
-              animationsEnabled={settings.enableAnimations}
-            />
-          );
-        })}
+        return (
+          <CategorySection
+            key={category}
+            title={title}
+            standalone={standalone}
+            grouped={grouped}
+            categoryIndex={categoryIndex}
+            totalCategories={categories.length}
+            categoryVariants={fadeInUp}
+            animationsEnabled={settings.enableAnimations}
+          />
+        );
+      })}
     </Section>
   );
 };
@@ -77,8 +81,8 @@ interface CategorySectionProps {
   animationsEnabled: boolean;
 }
 
-const CategorySection: React.FC<CategorySectionProps> = ({ 
-  title, 
+const CategorySection: React.FC<CategorySectionProps> = ({
+  title,
   standalone,
   grouped,
   categoryIndex,
@@ -100,7 +104,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           key={software.id}
           software={software}
           index={cardIndex++}
-        />
+        />,
       );
 
       // Check if this software has grouped libraries
@@ -111,16 +115,16 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           elements.push(
             <div key={library.id} className="relative">
               {/* Subtle connector line */}
-              <div 
+              <div
                 className="absolute left-0 top-0 bottom-0 w-0.5 bg-purple-500/20"
-                style={{ marginLeft: '-12px' }}
+                style={{ marginLeft: "-12px" }}
               />
               <SoftwareCard
                 software={library}
                 index={cardIndex++}
                 isGrouped={true}
               />
-            </div>
+            </div>,
           );
         });
       }
@@ -142,8 +146,8 @@ const CategorySection: React.FC<CategorySectionProps> = ({
       <h3
         className="text-2xl font-semibold mb-6"
         style={{
-          color: 'var(--color-text-primary)',
-          fontFamily: 'var(--font-heading)',
+          color: "var(--color-text-primary)",
+          fontFamily: "var(--font-heading)",
         }}
       >
         {title}
@@ -156,4 +160,3 @@ const CategorySection: React.FC<CategorySectionProps> = ({
     </motion.div>
   );
 };
-

@@ -8,11 +8,12 @@
  * Output: public/commercial/thumbs/** mirrored from originals
  * Max edge: 900px, quality 78, EXIF stripped, auto-oriented
  */
+
+import { spawn } from "node:child_process";
 import { mkdir, mkdtemp, readdir, rm, stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { spawn } from "node:child_process";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../public/commercial");

@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import * as SimpleIcons from 'react-icons/si';
+import { motion, useReducedMotion } from "framer-motion";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+import * as SimpleIcons from "react-icons/si";
 
 export interface SkillBadgeProps {
   name: string;
@@ -9,17 +10,17 @@ export interface SkillBadgeProps {
   index?: number;
 }
 
-const SkillBadge: React.FC<SkillBadgeProps> = ({ 
-  name, 
-  icon, 
-  className = '',
-  index = 0
+const SkillBadge: React.FC<SkillBadgeProps> = ({
+  name,
+  icon,
+  className = "",
+  index = 0,
 }) => {
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const badgeRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  
+
   // Dynamically get the icon component from react-icons/si
   const IconComponent = icon ? (SimpleIcons as any)[icon] : null;
 
@@ -36,7 +37,7 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
           }
         });
       },
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: "50px" },
     );
 
     observer.observe(badgeRef.current);
@@ -57,20 +58,20 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
       whileTap={!prefersReducedMotion ? { scale: 0.98 } : {}}
       className={`skill-badge ${className}`}
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1.25rem 1rem',
-        borderRadius: '1rem',
-        backgroundColor: 'rgba(15, 15, 25, 0.8)',
-        border: '1px solid rgba(139, 92, 246, 0.3)',
-        backdropFilter: 'blur(10px)',
-        cursor: 'default',
-        transition: 'all 0.3s ease',
-        position: 'relative',
-        overflow: 'hidden',
-        boxShadow: '0 4px 15px rgba(139, 92, 246, 0.1)',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1.25rem 1rem",
+        borderRadius: "1rem",
+        backgroundColor: "rgba(15, 15, 25, 0.8)",
+        border: "1px solid rgba(139, 92, 246, 0.3)",
+        backdropFilter: "blur(10px)",
+        cursor: "default",
+        transition: "all 0.3s ease",
+        position: "relative",
+        overflow: "hidden",
+        boxShadow: "0 4px 15px rgba(139, 92, 246, 0.1)",
       }}
     >
       {/* Neural pulse effect - only if animations enabled and not reduced motion */}
@@ -88,10 +89,11 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
             delay: animationDelay,
           }}
           style={{
-            position: 'absolute',
-            inset: '-20%',
-            background: 'radial-gradient(circle at center, rgba(139, 92, 246, 0.4) 0%, transparent 70%)',
-            pointerEvents: 'none',
+            position: "absolute",
+            inset: "-20%",
+            background:
+              "radial-gradient(circle at center, rgba(139, 92, 246, 0.4) 0%, transparent 70%)",
+            pointerEvents: "none",
           }}
         />
       )}
@@ -103,11 +105,12 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
         style={{
-          position: 'absolute',
+          position: "absolute",
           inset: 0,
-          background: 'radial-gradient(circle at center, rgba(167, 139, 250, 0.3) 0%, transparent 70%)',
+          background:
+            "radial-gradient(circle at center, rgba(167, 139, 250, 0.3) 0%, transparent 70%)",
           opacity: 0,
-          pointerEvents: 'none',
+          pointerEvents: "none",
         }}
       />
 
@@ -117,13 +120,13 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
           whileHover={!prefersReducedMotion ? { rotate: [0, -10, 10, 0] } : {}}
           transition={{ duration: 0.5 }}
           style={{
-            fontSize: '2.5rem',
-            marginBottom: '0.75rem',
-            color: 'rgba(167, 139, 250, 0.9)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))',
+            fontSize: "2.5rem",
+            marginBottom: "0.75rem",
+            color: "rgba(167, 139, 250, 0.9)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            filter: "drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))",
           }}
           aria-hidden="true"
         >
@@ -134,11 +137,11 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({
       {/* Skill Name */}
       <span
         style={{
-          fontSize: '0.875rem',
-          fontWeight: '600',
-          color: 'rgba(226, 232, 240, 0.95)',
-          textAlign: 'center',
-          lineHeight: '1.3',
+          fontSize: "0.875rem",
+          fontWeight: "600",
+          color: "rgba(226, 232, 240, 0.95)",
+          textAlign: "center",
+          lineHeight: "1.3",
           zIndex: 1,
         }}
       >

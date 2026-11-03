@@ -1,21 +1,21 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import {
+  type CommercialWork,
   commercialWorks,
   filterCommercialWorks,
-  type CommercialWork,
 } from "../../data/commercial";
 import {
-  commercialTagDefinitions,
   type CommercialTagId,
+  commercialTagDefinitions,
 } from "../../data/commercialTags";
-import { CommercialCard } from "../ui/CommercialCard";
-import { CommercialBackground } from "../ui/CommercialBackground";
-import Lightbox from "../ui/Lightbox";
-import { Section } from "../ui/Section";
 import { useInView } from "../../hooks";
 import { createFadeInUp, fadeIn, revealState } from "../../utils/animations";
-import { usePerformanceSettings } from "../../contexts/PerformanceContext";
+import { CommercialBackground } from "../ui/CommercialBackground";
+import { CommercialCard } from "../ui/CommercialCard";
+import Lightbox from "../ui/Lightbox";
+import { Section } from "../ui/Section";
 
 type CommercialFilter = "all" | CommercialTagId;
 
@@ -30,12 +30,14 @@ const filterOptions: { value: CommercialFilter; label: string }[] = [
 export const Commercial = () => {
   const [activeFilter, setActiveFilter] = useState<CommercialFilter>("all");
   const [selectedWork, setSelectedWork] = useState<CommercialWork | null>(null);
-  const { ref: filtersRef, inView: filtersInView } = useInView({ threshold: 0.2 });
+  const { ref: filtersRef, inView: filtersInView } = useInView({
+    threshold: 0.2,
+  });
   const settings = usePerformanceSettings();
 
   const filteredWorks = useMemo(
     () => filterCommercialWorks(commercialWorks, activeFilter),
-    [activeFilter]
+    [activeFilter],
   );
 
   const visibleTagFilters = useMemo(() => {
@@ -44,7 +46,8 @@ export const Commercial = () => {
       work.tags.forEach((tag) => used.add(tag));
     });
     return filterOptions.filter(
-      (option) => option.value === "all" || used.has(option.value as CommercialTagId)
+      (option) =>
+        option.value === "all" || used.has(option.value as CommercialTagId),
     );
   }, []);
 
@@ -100,7 +103,9 @@ export const Commercial = () => {
                     : "rgba(20, 14, 10, 0.45)",
                   color: isActive ? "#1c1410" : "#f5e6c8",
                   border: `1px solid ${
-                    isActive ? "rgba(250, 204, 21, 0.8)" : "rgba(253, 230, 138, 0.35)"
+                    isActive
+                      ? "rgba(250, 204, 21, 0.8)"
+                      : "rgba(253, 230, 138, 0.35)"
                   }`,
                   boxShadow: isActive
                     ? "0 0 20px rgba(253, 224, 165, 0.35)"

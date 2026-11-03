@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { prefersReducedMotion } from '../../utils/animations';
+import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "../../utils/animations";
 
 type Star = {
   x: number;
@@ -40,7 +40,7 @@ export const CosmicBackground = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const reduced = prefersReducedMotion();
@@ -50,7 +50,7 @@ export const CosmicBackground = () => {
       canvas.height = window.innerHeight;
     };
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     const particles: Star[] = [];
     const particleCount = 140;
@@ -79,7 +79,7 @@ export const CosmicBackground = () => {
       pointer.x = event.clientX;
       pointer.y = event.clientY;
     };
-    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener("mousemove", onPointerMove);
 
     let animationFrameId = 0;
     let last = performance.now();
@@ -92,7 +92,7 @@ export const CosmicBackground = () => {
       ctx.clearRect(0, 0, width, height);
       ctx.shadowBlur = 0;
 
-      const hero = document.getElementById('home');
+      const hero = document.getElementById("home");
       let portalX = width / 2;
       let portalY = height / 2;
       let pull = 0;
@@ -102,7 +102,10 @@ export const CosmicBackground = () => {
         portalY = rect.top + rect.height / 2;
         const inView = portalY > -80 && portalY < height + 80;
         if (inView) {
-          pull = Math.max(0, 1 - Math.abs(portalY - height * 0.5) / (height * 0.75));
+          pull = Math.max(
+            0,
+            1 - Math.abs(portalY - height * 0.5) / (height * 0.75),
+          );
         }
       }
 
@@ -116,8 +119,10 @@ export const CosmicBackground = () => {
           const reach = 170;
           if (pd < reach) {
             const falloff = (1 - pd / reach) ** 2 * pointer.energy;
-            particle.vx += pointer.vx * 14 * falloff + (-pdy / pd) * 36 * falloff;
-            particle.vy += pointer.vy * 14 * falloff + (pdx / pd) * 36 * falloff;
+            particle.vx +=
+              pointer.vx * 14 * falloff + (-pdy / pd) * 36 * falloff;
+            particle.vy +=
+              pointer.vy * 14 * falloff + (pdx / pd) * 36 * falloff;
           }
         }
 
@@ -164,16 +169,34 @@ export const CosmicBackground = () => {
           placeOnRim(particle, width, height);
         }
 
-        const distToPortal = Math.hypot(portalX - particle.x, portalY - particle.y);
+        const distToPortal = Math.hypot(
+          portalX - particle.x,
+          portalY - particle.y,
+        );
         const proximity = pull > 0 ? Math.max(0, 1 - distToPortal / 520) : 0;
         const cursorGlow =
-          pointer.energy > 0.06 ? Math.max(0, 1 - Math.hypot(particle.x - pointer.x, particle.y - pointer.y) / 170) : 0;
-        const alpha = Math.min(0.95, particle.opacity + proximity * 0.45 + cursorGlow * pointer.energy * 0.4);
+          pointer.energy > 0.06
+            ? Math.max(
+                0,
+                1 -
+                  Math.hypot(particle.x - pointer.x, particle.y - pointer.y) /
+                    170,
+              )
+            : 0;
+        const alpha = Math.min(
+          0.95,
+          particle.opacity +
+            proximity * 0.45 +
+            cursorGlow * pointer.energy * 0.4,
+        );
 
         if (speed > 40 && pull > 0.04) {
           ctx.beginPath();
           ctx.moveTo(particle.x, particle.y);
-          ctx.lineTo(particle.x - particle.vx * 0.02, particle.y - particle.vy * 0.02);
+          ctx.lineTo(
+            particle.x - particle.vx * 0.02,
+            particle.y - particle.vy * 0.02,
+          );
           ctx.strokeStyle = `rgba(196, 181, 253, ${alpha * 0.7})`;
           ctx.lineWidth = particle.size;
           ctx.stroke();
@@ -183,7 +206,7 @@ export const CosmicBackground = () => {
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(139, 92, 246, ${alpha})`;
         ctx.shadowBlur = 10;
-        ctx.shadowColor = 'rgba(139, 92, 246, 0.5)';
+        ctx.shadowColor = "rgba(139, 92, 246, 0.5)";
         ctx.fill();
         ctx.shadowBlur = 0;
       });
@@ -194,8 +217,8 @@ export const CosmicBackground = () => {
     animationFrameId = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', onPointerMove);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", onPointerMove);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

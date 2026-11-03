@@ -1,19 +1,22 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import SocialLinks from '../ui/SocialLinks';
-import { personalInfo } from '../../data/personal';
-import { navLinks } from '../../data/navigation';
+import { motion } from "framer-motion";
+import type React from "react";
+import { navLinks } from "../../data/navigation";
+import { personalInfo } from "../../data/personal";
+import SocialLinks from "../ui/SocialLinks";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = personalInfo.social;
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -32,9 +35,7 @@ const Footer: React.FC = () => {
             <h3 className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent mb-2">
               {personalInfo.name}
             </h3>
-            <p className="text-text-secondary text-sm">
-              {personalInfo.title}
-            </p>
+            <p className="text-text-secondary text-sm">{personalInfo.title}</p>
           </motion.div>
 
           {/* Quick Navigation */}

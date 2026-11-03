@@ -38,7 +38,8 @@ export const threeDWorks: ThreeDWork[] = [
       albedo: "/3D/Corrupted_Healthpack/openPBR_shader1_AlbedoTransparency.png",
       normal: "/3D/Corrupted_Healthpack/openPBR_shader1_Normal.png",
       emission: "/3D/Corrupted_Healthpack/openPBR_shader1_Emission.png",
-      metallicSmoothness: "/3D/Corrupted_Healthpack/openPBR_shader1_MetallicSmoothness.png",
+      metallicSmoothness:
+        "/3D/Corrupted_Healthpack/openPBR_shader1_MetallicSmoothness.png",
     },
   },
   {

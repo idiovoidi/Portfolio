@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface TiltOptions {
   maxTilt?: number;
@@ -47,7 +47,9 @@ export const useTilt = (options: TiltOptions = {}) => {
     if (!element || disabled) return;
 
     // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReducedMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -95,36 +97,40 @@ export const useTilt = (options: TiltOptions = {}) => {
       });
     };
 
-    element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('mouseenter', handleMouseEnter);
-    element.addEventListener('mouseleave', handleMouseLeave);
+    element.addEventListener("mousemove", handleMouseMove);
+    element.addEventListener("mouseenter", handleMouseEnter);
+    element.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      element.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('mouseenter', handleMouseEnter);
-      element.removeEventListener('mouseleave', handleMouseLeave);
+      element.removeEventListener("mousemove", handleMouseMove);
+      element.removeEventListener("mouseenter", handleMouseEnter);
+      element.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [maxTilt, perspective, scale, speed, glare, maxGlare, disabled]);
 
-  const isTilting = tiltState.rotateX !== 0 || tiltState.rotateY !== 0 || tiltState.scale !== 1;
-  const tiltStyle = disabled || !isTilting ? {} : {
-    transform: `perspective(${perspective}px) rotateX(${tiltState.rotateX}deg) rotateY(${tiltState.rotateY}deg) scale3d(${tiltState.scale}, ${tiltState.scale}, ${tiltState.scale})`,
-    transition: `transform ${speed}ms cubic-bezier(0.03, 0.98, 0.52, 0.99)`,
-  };
+  const isTilting =
+    tiltState.rotateX !== 0 || tiltState.rotateY !== 0 || tiltState.scale !== 1;
+  const tiltStyle =
+    disabled || !isTilting
+      ? {}
+      : {
+          transform: `perspective(${perspective}px) rotateX(${tiltState.rotateX}deg) rotateY(${tiltState.rotateY}deg) scale3d(${tiltState.scale}, ${tiltState.scale}, ${tiltState.scale})`,
+          transition: `transform ${speed}ms cubic-bezier(0.03, 0.98, 0.52, 0.99)`,
+        };
 
   const glareStyle = glare
     ? {
-        position: 'absolute' as const,
+        position: "absolute" as const,
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         background: `radial-gradient(circle at ${tiltState.glarePosition.x}% ${tiltState.glarePosition.y}%, rgba(255, 255, 255, ${tiltState.glareOpacity}), transparent 50%)`,
-        pointerEvents: 'none' as const,
+        pointerEvents: "none" as const,
         transition: `opacity ${speed}ms ease`,
         opacity: tiltState.glareOpacity > 0 ? 1 : 0,
         zIndex: 10,
-        borderRadius: 'inherit',
+        borderRadius: "inherit",
       }
     : null;
 

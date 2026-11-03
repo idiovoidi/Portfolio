@@ -1,3 +1,3 @@
-export { useScrollSpy } from './useScrollSpy';
-export { useInView } from './useInView';
-export { useTilt } from './useTilt';
+export { useInView } from "./useInView";
+export { useScrollSpy } from "./useScrollSpy";
+export { useTilt } from "./useTilt";
