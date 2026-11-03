@@ -2,6 +2,8 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 
+const DIVIDER_TEXT = "idiovoidi".repeat(40);
+
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -28,6 +30,15 @@ const Header: React.FC = () => {
     >
       <div className="nav-texture" aria-hidden="true" />
       <Navigation />
+      <div className="nav-divider" aria-hidden="true">
+        <div className="nav-divider-track">
+          {[0, 1].map((copy) => (
+            <span key={copy} className="nav-divider-run">
+              {DIVIDER_TEXT}
+            </span>
+          ))}
+        </div>
+      </div>
     </header>
   );
 };

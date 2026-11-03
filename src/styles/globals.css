@@ -999,6 +999,72 @@
     }
   }
 
+  /* Nav divider: tiny repeating wordmark drifting along the header's bottom edge */
+  .nav-divider {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 9px;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+  }
+
+  .nav-divider-track {
+    display: flex;
+    width: max-content;
+    animation: navDividerDrift 90s linear infinite;
+  }
+
+  .nav-divider-run {
+    flex-shrink: 0;
+    font-family: var(--font-glitch);
+    font-size: 6px;
+    line-height: 9px;
+    font-weight: 900;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary),
+      var(--color-accent),
+      var(--color-accent-magenta),
+      var(--color-primary)
+    );
+    background-size: 50% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.4;
+  }
+
+  @keyframes navDividerDrift {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-divider-track {
+      animation: none;
+    }
+  }
+
   /* Cursed Text: dim candlelight flicker with a faint chromatic split */
   .cursed-text {
     color: #b8962e;
