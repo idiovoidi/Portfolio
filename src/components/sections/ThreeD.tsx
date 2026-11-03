@@ -128,7 +128,13 @@ export const ThreeD = () => {
                   {work.title}
                 </h3>
                 {work.category && (
-                  <span className="text-xs text-gray-500 uppercase tracking-wider">
+                  <span
+                    className={
+                      work.category === "Zbrush"
+                        ? "inline-block rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white bg-[#F26A1B] border border-[#FF9650]/60 shadow-[0_0_8px_rgba(242,106,27,0.5)]"
+                        : "text-xs text-gray-500 uppercase tracking-wider"
+                    }
+                  >
                     {work.category}
                   </span>
                 )}
