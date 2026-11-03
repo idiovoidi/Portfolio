@@ -184,6 +184,18 @@ export const projects: Project[] = [
     featured: false,
   },
   {
+    id: "procedural-park",
+    title: "Procedural Park",
+    description:
+      "A browser-based 3D wildlife photography and park-building game. Roam the park, photograph and collect unique creatures, feed them to build trust, and run a market, breeding den and day/night cycle.",
+    image: "/projects/placeholder.svg", // TODO: replace with a real thumbnail
+    technologies: ["TypeScript", "Three.js", "Vite", "WebRTC"],
+    liveUrl: "https://idiovoidi.github.io/Procedural_Park/",
+    githubUrl: "https://github.com/idiovoidi/Procedural_Park",
+    category: "game",
+    featured: false,
+  },
+  {
     id: "fish-evo",
     title: "Fish Evo",
     description:
