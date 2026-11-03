@@ -11,6 +11,10 @@ const MARKS_MID = "̴̵̶̡̢̧̨̛̀́̕͘͏̸̷͜͟͢͝͞͠͡҉";
 const MARKS_DOWN = "̖̗̘̙̜̝̞̟̠̤̥̦̩̪̫̬̭̮̯̰̱̲̳̹̺̻̼͇͈͉͍͎͓͔͕͖͙͚̣ͅ";
 const SYMBOLS = "█▓▒░▌▐╬╫☠⚠¿?#%&@$";
 
+// Corruption levels: low enough between spikes that the text stays readable
+const CALM = 0.5;
+const SPIKE = 1.5;
+
 const pick = (s: string) => s[Math.floor(Math.random() * s.length)];
 const pickN = (s: string, n: number) =>
   Array.from({ length: n }, () => pick(s)).join("");
@@ -32,14 +36,14 @@ function curse(text: string, intensity: number): string {
 }
 
 const CursedText: React.FC<CursedTextProps> = ({ text, className = "" }) => {
-  const [display, setDisplay] = useState(() => curse(text, 1));
+  const [display, setDisplay] = useState(() => curse(text, CALM));
 
   useEffect(() => {
     // Re-roll the corruption at irregular intervals, with occasional violent spikes
     let timeout: ReturnType<typeof setTimeout>;
     const tick = () => {
       const spike = Math.random() > 0.8;
-      setDisplay(curse(text, spike ? 3 : 1));
+      setDisplay(curse(text, spike ? SPIKE : CALM));
       timeout = setTimeout(tick, spike ? 90 : 150 + Math.random() * 600);
     };
     timeout = setTimeout(tick, 300);
@@ -48,12 +52,9 @@ const CursedText: React.FC<CursedTextProps> = ({ text, className = "" }) => {
 
   return (
     <span
-      className={`inline-block relative overflow-visible ${className}`}
+      className={`cursed-text inline-block relative overflow-visible ${className}`}
       aria-label={text}
-      style={{
-        textShadow: "-1px 0 #ff00c1, 1px 0 #00fff9",
-        fontFamily: "var(--font-glitch)",
-      }}
+      style={{ fontFamily: "var(--font-glitch)" }}
     >
       <span aria-hidden="true">{display}</span>
     </span>
