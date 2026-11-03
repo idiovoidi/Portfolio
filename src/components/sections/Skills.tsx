@@ -11,6 +11,7 @@ import {
 import { NeuralBackground } from "../ui/NeuralBackground";
 import { Section } from "../ui/Section";
 import SkillBadge from "../ui/SkillBadge";
+import { SkillGraph } from "../ui/SkillGraph";
 
 export const Skills: React.FC = () => {
   const { ref: skillsRef, inView: skillsInView } = useInView({
@@ -34,6 +35,10 @@ export const Skills: React.FC = () => {
         animate={revealState(skillsInView, settings.enableAnimations)}
         className="space-y-12"
       >
+        <motion.div variants={fadeInUp}>
+          <SkillGraph />
+        </motion.div>
+
         {skillsData.map((group) => (
           <motion.div
             key={group.name}

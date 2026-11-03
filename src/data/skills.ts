@@ -36,6 +36,8 @@ export interface Skill {
   category: SkillCategory;
   icon?: string; // Icon name from react-icons (e.g., 'SiReact')
   proficiency?: number; // Optional: 1-100 scale
+  /** Other names this skill appears under in project/artwork tool lists */
+  aliases?: string[];
 }
 
 export interface SkillGroup {
@@ -54,8 +56,15 @@ export const skillsData: SkillGroup[] = [
         category: "frontend",
         icon: "SiJavascript",
         proficiency: 95,
+        aliases: ["JavaScript", "TypeScript"],
       },
-      { name: "HTML5", category: "frontend", icon: "SiHtml5", proficiency: 95 },
+      {
+        name: "HTML5",
+        category: "frontend",
+        icon: "SiHtml5",
+        proficiency: 95,
+        aliases: ["HTML5 Canvas"],
+      },
       {
         name: "Tailwind CSS",
         category: "frontend",
@@ -68,6 +77,9 @@ export const skillsData: SkillGroup[] = [
         icon: "SiQt",
         proficiency: 90,
       },
+      { name: "Three.js", category: "frontend", icon: "SiThreedotjs" },
+      { name: "Pixi.js", category: "frontend", icon: "SiPixijs" },
+      { name: "Babylon.js", category: "frontend" },
     ],
   },
   {
@@ -91,6 +103,7 @@ export const skillsData: SkillGroup[] = [
         icon: "SiMariadb",
         proficiency: 80,
       },
+      { name: "SQLite", category: "backend", icon: "SiSqlite" },
     ],
   },
   {
@@ -107,12 +120,14 @@ export const skillsData: SkillGroup[] = [
         category: "design",
         icon: "SiAdobephotoshop",
         proficiency: 80,
+        aliases: ["Photoshop"],
       },
       {
         name: "Adobe Illustrator",
         category: "design",
         icon: "SiAdobeillustrator",
         proficiency: 75,
+        aliases: ["Illustrator"],
       },
       {
         name: "Unreal Engine",
@@ -126,6 +141,18 @@ export const skillsData: SkillGroup[] = [
         icon: "SiSteinberg",
         proficiency: 85,
       },
+      { name: "Maya", category: "design" },
+      { name: "Substance Painter", category: "design" },
+      { name: "Lightroom", category: "design", icon: "SiAdobelightroom" },
+      { name: "InDesign", category: "design", icon: "SiAdobeindesign" },
+      { name: "Figma", category: "design", icon: "SiFigma" },
+      {
+        name: "Premiere",
+        category: "design",
+        icon: "SiAdobepremierepro",
+        aliases: ["Premiere Pro"],
+      },
+      { name: "Photography", category: "design", aliases: ["Canon EOS 600D"] },
     ],
   },
 ];
