@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollSpy } from "../../hooks";
+import { CursedText } from "../ui/CursedText";
 import { navLinks, type NavGroup, type NavLink } from "../../data/navigation";
 
 const GROUP_THEME: Record<
@@ -360,7 +361,9 @@ const Navigation: React.FC = () => {
             aria-label="Toggle light mode"
           >
             <span>☀️</span>
-            <span className="text-text-secondary text-[10px]">Light Mode</span>
+            <span className="text-text-secondary text-[10px]">
+              <CursedText text="Light Mode" />
+            </span>
           </button>
         </div>
 
