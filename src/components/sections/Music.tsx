@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import { spotifyArtistUrl, spotifyTracks } from "../../data/music";
 import { useInView } from "../../hooks";
@@ -56,7 +57,133 @@ const waves = [
   },
 ];
 
-const MusicBackground = ({ animated }: { animated: boolean }) => (
+interface SpotifyController {
+  addListener: (
+    event: "playback_update",
+    cb: (e: { data: { isPaused: boolean; isBuffering: boolean } }) => void,
+  ) => void;
+  destroy: () => void;
+}
+
+interface SpotifyIFrameAPI {
+  createController: (
+    el: HTMLElement,
+    options: { uri: string; width: string; height: number },
+    cb: (controller: SpotifyController) => void,
+  ) => void;
+}
+
+declare global {
+  interface Window {
+    onSpotifyIframeApiReady?: (api: SpotifyIFrameAPI) => void;
+  }
+}
+
+const API_TIMEOUT_MS = 6000;
+
+let spotifyApi: Promise<SpotifyIFrameAPI> | null = null;
+
+// Official embed API: lets us hear play/pause without touching the iframe
+const loadSpotifyApi = () => {
+  spotifyApi ??= new Promise((resolve, reject) => {
+    // The loader pulls in a second script; if that's blocked it never reports ready
+    const timeout = window.setTimeout(() => {
+      spotifyApi = null;
+      reject(new Error("Spotify iframe API timed out"));
+    }, API_TIMEOUT_MS);
+    window.onSpotifyIframeApiReady = (api) => {
+      window.clearTimeout(timeout);
+      resolve(api);
+    };
+    const script = document.createElement("script");
+    script.src = "https://open.spotify.com/embed/iframe-api/v1";
+    script.async = true;
+    script.onerror = () => {
+      spotifyApi = null;
+      reject(new Error("Spotify iframe API failed to load"));
+    };
+    document.body.appendChild(script);
+  });
+  return spotifyApi;
+};
+
+const SpotifyEmbed = ({
+  track,
+  title,
+  onPlayingChange,
+}: {
+  track: string;
+  title: string;
+  onPlayingChange: (playing: boolean) => void;
+}) => {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [failed, setFailed] = useState(false);
+  const onChangeRef = useRef(onPlayingChange);
+  onChangeRef.current = onPlayingChange;
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+
+    let cancelled = false;
+    let controller: SpotifyController | undefined;
+    const mount = document.createElement("div");
+    host.appendChild(mount);
+
+    loadSpotifyApi()
+      .then((api) => {
+        if (cancelled) return;
+        api.createController(
+          mount,
+          {
+            uri: `spotify:track:${track}`,
+            width: "100%",
+            height: 152,
+          },
+          (c) => {
+            if (cancelled) return c.destroy();
+            controller = c;
+            c.addListener("playback_update", (e) =>
+              onChangeRef.current(!e.data.isPaused && !e.data.isBuffering),
+            );
+          },
+        );
+      })
+      .catch(() => !cancelled && setFailed(true));
+
+    return () => {
+      cancelled = true;
+      controller?.destroy();
+      onChangeRef.current(false);
+      mount.remove();
+    };
+  }, [track]);
+
+  if (failed) {
+    return (
+      <iframe
+        src={`https://open.spotify.com/embed/track/${track}?utm_source=generator&theme=0`}
+        width="100%"
+        height="152"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        className="rounded-lg"
+        title={title}
+      />
+    );
+  }
+
+  return <div ref={hostRef} className="rounded-lg" />;
+};
+
+const MusicBackground = ({
+  animated,
+  playing,
+}: {
+  animated: boolean;
+  playing: boolean;
+}) => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
     {/* Ambient glows */}
     <div
@@ -96,7 +223,10 @@ const MusicBackground = ({ animated }: { animated: boolean }) => (
     ))}
 
     {/* Scrolling waveforms */}
-    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-48">
+    <div
+      className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-48"
+      style={{ opacity: "calc(0.7 + var(--beat) * 0.5)" }}
+    >
       {waves.map((wave) => (
         <svg
           key={wave.color}
@@ -127,6 +257,9 @@ const MusicBackground = ({ animated }: { animated: boolean }) => (
     <div
       className="absolute inset-x-0 bottom-0 h-56 flex items-end justify-between gap-1 px-2"
       style={{
+        transformOrigin: "bottom",
+        transform: `scaleY(${playing ? 1 : 0.12})`,
+        transition: "transform 1s ease-out",
         maskImage: "linear-gradient(to top, black 10%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to top, black 10%, transparent 100%)",
       }}
@@ -140,7 +273,7 @@ const MusicBackground = ({ animated }: { animated: boolean }) => (
             transformOrigin: "bottom",
             transform: animated ? undefined : "scaleY(0.4)",
             animation: animated
-              ? `eqBar ${bar.duration}s ease-in-out infinite ${bar.delay}s`
+              ? `eqBar ${bar.duration * (playing ? 1 : 3)}s ease-in-out infinite ${bar.delay}s`
               : undefined,
           }}
         />
@@ -153,13 +286,28 @@ export const Music = () => {
   const { ref, inView } = useInView({ threshold: 0.1, rootMargin: "200px" });
   const settings = usePerformanceSettings();
   const showEmbeds = inView;
+  const [playingIds, setPlayingIds] = useState<ReadonlySet<string>>(new Set());
+  const playing = playingIds.size > 0;
+  const setTrackPlaying = (id: string, isPlaying: boolean) =>
+    setPlayingIds((prev) => {
+      if (prev.has(id) === isPlaying) return prev;
+      const next = new Set(prev);
+      if (isPlaying) next.add(id);
+      else next.delete(id);
+      return next;
+    });
 
   return (
     <Section
       id="music"
       tone="secondary"
       className="overflow-hidden"
-      background={<MusicBackground animated={settings.enableAnimations} />}
+      background={
+        <MusicBackground
+          animated={settings.enableAnimations}
+          playing={playing}
+        />
+      }
       title={
         <TextEffect effect="glitch" as="h2" className="section-heading">
           MUSIC
@@ -189,15 +337,10 @@ export const Music = () => {
           >
             <div className="relative overflow-hidden rounded-lg bg-black/40 backdrop-blur-sm border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300">
               {showEmbeds ? (
-                <iframe
-                  src={`https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0`}
-                  width="100%"
-                  height="152"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                  className="rounded-lg"
+                <SpotifyEmbed
+                  track={track.id}
                   title={track.title || `Spotify track ${index + 1}`}
+                  onPlayingChange={(p) => setTrackPlaying(track.id, p)}
                 />
               ) : (
                 <div className="h-[152px]" aria-hidden />
