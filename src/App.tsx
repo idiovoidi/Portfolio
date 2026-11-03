@@ -8,6 +8,7 @@ import { SoftwareExperience } from "./components/sections/SoftwareExperience";
 import { CosmicBackground } from "./components/ui/CosmicBackground";
 import { PerformanceToggle } from "./components/ui/PerformanceToggle";
 import { ScrollProgress } from "./components/ui/ScrollProgress";
+import { VoidLayer } from "./components/ui/VoidLayer";
 import {
   PerformanceProvider,
   usePerformance,
@@ -60,6 +61,7 @@ function AppContent() {
 
       <ScrollProgress />
       <PerformanceToggle />
+      <VoidLayer />
 
       <div className="relative z-10">
         <Header />

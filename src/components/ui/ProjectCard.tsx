@@ -50,6 +50,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     <>
       <div
         ref={tiltRef}
+        id={`project-${project.id}`}
         style={{
           ...tiltStyle,
           transformStyle: "preserve-3d",

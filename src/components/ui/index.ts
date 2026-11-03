@@ -36,3 +36,4 @@ export { SoftwareCard } from "./SoftwareCard";
 export type { TextEffectType } from "./TextEffect";
 export { TextEffect } from "./TextEffect";
 export { VoidEyeball } from "./VoidEyeball";
+export { VoidLayer } from "./VoidLayer";

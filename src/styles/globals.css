@@ -1180,3 +1180,62 @@
     }
   }
 }
+
+/* ---- Site-wide void gimmicks ---- */
+
+/* Idle decay: CRT scanlines creep in over ~20s, snap out on input */
+.void-decay-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9400;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.08s linear;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.35) 0px,
+      rgba(0, 0, 0, 0.35) 1px,
+      transparent 2px,
+      transparent 4px
+    ),
+    radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+}
+.void-decay-scanlines[data-active="true"] {
+  opacity: 1;
+  transition: opacity 20s ease-in;
+  animation: void-scan-roll 6s linear infinite;
+}
+@keyframes void-scan-roll {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 0 80px, 0 0;
+  }
+}
+
+html[data-void-decay] h1,
+html[data-void-decay] h2,
+html[data-void-decay] h3 {
+  animation: void-text-tear 2.4s steps(1) infinite;
+}
+@keyframes void-text-tear {
+  0%,
+  92%,
+  100% {
+    text-shadow: none;
+  }
+  93% {
+    text-shadow: 3px 0 rgba(236, 72, 153, 0.8), -3px 0 rgba(6, 182, 212, 0.8);
+  }
+  96% {
+    text-shadow: -2px 1px rgba(236, 72, 153, 0.8), 2px -1px rgba(6, 182, 212, 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .void-decay-scanlines {
+    display: none;
+  }
+}
