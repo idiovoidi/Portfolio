@@ -6,37 +6,145 @@ import { createFadeInUp, revealState } from "../../utils/animations";
 import { Section } from "../ui/Section";
 import { TextEffect } from "../ui/TextEffect";
 
-const MusicBackground = () => (
-  <div className="absolute inset-0 pointer-events-none">
+const EQ_BAR_COUNT = 56;
+const WAVE_PERIOD = 600;
+const WAVE_WIDTH = WAVE_PERIOD * 4;
+
+// Pseudo-random but stable, so bars don't reshuffle on re-render
+const eqBars = Array.from({ length: EQ_BAR_COUNT }, (_, i) => {
+  const r = Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
+  const envelope = 0.45 + 0.55 * Math.sin((i / (EQ_BAR_COUNT - 1)) * Math.PI);
+  return {
+    height: 40 + 60 * r * envelope,
+    duration: 0.9 + r * 1.4,
+    delay: -r * 3,
+  };
+});
+
+const buildWave = (amplitude: number, cycles: number, phase: number) => {
+  const mid = 100;
+  const step = 20;
+  let d = "";
+  for (let x = 0; x <= WAVE_WIDTH; x += step) {
+    const y =
+      mid +
+      amplitude * Math.sin((x / WAVE_WIDTH) * cycles * Math.PI * 2 + phase);
+    d += `${x === 0 ? "M" : "L"}${x},${y.toFixed(1)} `;
+  }
+  return d;
+};
+
+// cycles must be even so a 50% shift loops seamlessly
+const waves = [
+  {
+    d: buildWave(38, 8, 0),
+    color: "168, 85, 247",
+    duration: 22,
+    opacity: 0.22,
+  },
+  {
+    d: buildWave(24, 12, 1.3),
+    color: "236, 72, 153",
+    duration: 15,
+    opacity: 0.16,
+  },
+  {
+    d: buildWave(16, 16, 2.6),
+    color: "59, 130, 246",
+    duration: 30,
+    opacity: 0.14,
+  },
+];
+
+const MusicBackground = ({ animated }: { animated: boolean }) => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    {/* Ambient glows */}
     <div
-      className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full opacity-20"
+      className="absolute -top-20 left-[10%] w-[28rem] h-[28rem] rounded-full opacity-20"
       style={{
         background:
-          "radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%)",
-        animation: "musicPulse 2s ease-in-out infinite",
+          "radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%)",
+        animation: animated ? "musicPulse 4s ease-in-out infinite" : undefined,
       }}
     />
     <div
-      className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full opacity-15"
+      className="absolute top-1/3 -right-24 w-[32rem] h-[32rem] rounded-full opacity-15"
       style={{
         background:
-          "radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)",
-        animation: "musicPulse 2.5s ease-in-out infinite 0.3s",
+          "radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, transparent 70%)",
+        animation: animated
+          ? "musicPulse 5s ease-in-out infinite 0.8s"
+          : undefined,
       }}
     />
-    <div
-      className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full opacity-10"
-      style={{
-        background:
-          "radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)",
-        animation: "musicPulse 3s ease-in-out infinite 0.6s",
-      }}
-    />
-    <div className="absolute left-0 top-1/2 w-full h-1 opacity-10">
+
+    {/* Sub-bass rings radiating from the centre */}
+    {[0, 1, 2].map((i) => (
       <div
-        className="h-full bg-gradient-to-r from-transparent via-purple-500 to-transparent"
-        style={{ animation: "soundwave 4s ease-in-out infinite" }}
+        key={i}
+        className="absolute left-1/2 top-1/2 rounded-full border border-purple-400/40"
+        style={{
+          width: "90vmax",
+          height: "90vmax",
+          opacity: animated ? 0 : 0.06 + i * 0.03,
+          transform: `translate(-50%, -50%) scale(${0.35 + i * 0.25})`,
+          animation: animated
+            ? `bassRing 9s cubic-bezier(0.2, 0.6, 0.3, 1) infinite ${i * 3}s`
+            : undefined,
+        }}
       />
+    ))}
+
+    {/* Scrolling waveforms */}
+    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-48">
+      {waves.map((wave) => (
+        <svg
+          key={wave.color}
+          className="absolute top-0 left-0 h-full"
+          style={{
+            width: "200%",
+            opacity: wave.opacity,
+            animation: animated
+              ? `waveScroll ${wave.duration}s linear infinite`
+              : undefined,
+          }}
+          viewBox={`0 0 ${WAVE_WIDTH} 200`}
+          preserveAspectRatio="none"
+          aria-hidden
+        >
+          <path
+            d={wave.d}
+            fill="none"
+            stroke={`rgb(${wave.color})`}
+            strokeWidth={2}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      ))}
+    </div>
+
+    {/* Equalizer bars */}
+    <div
+      className="absolute inset-x-0 bottom-0 h-56 flex items-end justify-between gap-1 px-2"
+      style={{
+        maskImage: "linear-gradient(to top, black 10%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to top, black 10%, transparent 100%)",
+      }}
+    >
+      {eqBars.map((bar, i) => (
+        <div
+          key={i}
+          className="flex-1 rounded-t-sm bg-gradient-to-t from-purple-500/40 via-pink-500/25 to-transparent"
+          style={{
+            height: `${bar.height}%`,
+            transformOrigin: "bottom",
+            transform: animated ? undefined : "scaleY(0.4)",
+            animation: animated
+              ? `eqBar ${bar.duration}s ease-in-out infinite ${bar.delay}s`
+              : undefined,
+          }}
+        />
+      ))}
     </div>
   </div>
 );
@@ -51,7 +159,7 @@ export const Music = () => {
       id="music"
       tone="secondary"
       className="overflow-hidden"
-      background={<MusicBackground />}
+      background={<MusicBackground animated={settings.enableAnimations} />}
       title={
         <TextEffect effect="glitch" as="h2" className="section-heading">
           MUSIC
