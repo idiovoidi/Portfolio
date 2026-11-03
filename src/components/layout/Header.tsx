@@ -2,7 +2,8 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 
-const DIVIDER_TEXT = "idiovoidi".repeat(40);
+// "idiovo" tiles into idiovoidiovoidi…, so each word shares its "i" with the next
+const DIVIDER_TEXT = "idiovo".repeat(40);
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
