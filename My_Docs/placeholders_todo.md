@@ -15,4 +15,5 @@ Then re-scrape the link (LinkedIn Post Inspector, Discord/Slack cache) to see th
 - `[Your Name]` was replaced with the handle `idiovoidi` (used in README, nav and OG image). If you want
   your real name in the title/author meta, edit `index.html`.
 - Favicon is a simple generated `public/favicon.svg` ("i" on the purple theme). Replace it with a real logo if you have one.
-- `public/og-image.png` was rendered from `public/og-image.svg`. Re-render if you edit the SVG.
+- `public/og-image.png` is a 1200x630 screenshot of the landing page (void + particles, nav and buttons hidden).
+  Retake it if the hero changes. `public/og-image.svg` is the old design and is no longer referenced.
