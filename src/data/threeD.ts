@@ -13,7 +13,12 @@ export interface ThreeDWork {
   id: string;
   title: string;
   description?: string;
-  modelPath: string;
+  /** Omit for image-only works (e.g. ZBrush renders) */
+  modelPath?: string;
+  /** Image-only works; multiple images share one tile */
+  images?: string[];
+  /** How multiple images fill the tile: side by side (default) or fading between them */
+  imageLayout?: "split" | "cycle";
   thumbnail?: string;
   category?: string;
   textures?: ModelTextures;
@@ -48,5 +53,38 @@ export const threeDWorks: ThreeDWork[] = [
     description: "3D enemy character model",
     modelPath: "/3D/enemy.glb",
     category: "Character",
+  },
+  {
+    id: "3d-man-sculpt",
+    title: "Male Bust Sculpt",
+    images: ["/3D/Zbrush/3D_Man_Sculpt_Zbrush.png"],
+    category: "Zbrush",
+  },
+  {
+    id: "chess-pieces",
+    title: "Chess Pieces",
+    description: "Pawn and queen sculpts",
+    images: [
+      "/3D/Zbrush/Chess_Pawn_Sculpt.jpg",
+      "/3D/Zbrush/Chess_Queen_Sculpt.jpg",
+    ],
+    category: "Zbrush",
+  },
+  {
+    id: "dolphin",
+    title: "Creepy Dolphin",
+    description: "He's always watching...",
+    images: ["/3D/Zbrush/Dolphin-Angle-1.jpg"],
+    category: "Zbrush",
+  },
+  {
+    id: "goat-sculpt",
+    title: "Alien Goat Sculpt",
+    imageLayout: "cycle",
+    images: [
+      "/3D/Zbrush/Goat_Sculpt.png",
+      "/3D/Zbrush/Goat_Sculpt_Underside.png",
+    ],
+    category: "Zbrush",
   },
 ];

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import { type ThreeDWork, threeDWorks } from "../../data/threeD";
 import { useInView } from "../../hooks";
@@ -13,6 +13,40 @@ import { DimensionBackground } from "../ui/DimensionBackground";
 import { ModelViewer } from "../ui/ModelViewer";
 import { Section } from "../ui/Section";
 import { TextEffect } from "../ui/TextEffect";
+
+const CycleImages = ({
+  title,
+  images,
+}: {
+  title: string;
+  images: string[];
+}) => {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(
+      () => setActive((i) => (i + 1) % images.length),
+      3000,
+    );
+    return () => clearInterval(id);
+  }, [images.length]);
+
+  return (
+    <div className="relative h-full w-full">
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`${title} ${i + 1}`}
+          loading="lazy"
+          className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ${
+            i === active ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </div>
+  );
+};
 
 export const ThreeD = () => {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -56,7 +90,28 @@ export const ThreeD = () => {
           >
             <div className="relative overflow-hidden rounded-lg bg-black/40 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 h-full">
               <div className="relative aspect-square overflow-hidden bg-black/50">
-                {inView && (
+                {work.images && work.imageLayout === "cycle" && (
+                  <CycleImages title={work.title} images={work.images} />
+                )}
+                {work.images && work.imageLayout !== "cycle" && (
+                  <div
+                    className="grid h-full w-full"
+                    style={{
+                      gridTemplateColumns: `repeat(${work.images.length}, 1fr)`,
+                    }}
+                  >
+                    {work.images.map((src, i) => (
+                      <img
+                        key={src}
+                        src={src}
+                        alt={`${work.title} ${i + 1}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    ))}
+                  </div>
+                )}
+                {inView && work.modelPath && (
                   <ModelViewer
                     src={work.modelPath}
                     alt={work.title}
@@ -120,14 +175,28 @@ export const ThreeD = () => {
                 </p>
               )}
             </div>
-            <ModelViewer
-              src={selectedModel.modelPath}
-              alt={selectedModel.title}
-              textures={selectedModel.textures}
-              autoRotate={true}
-              cameraControls={true}
-              className="w-full h-full"
-            />
+            {selectedModel.images && (
+              <div className="flex h-full w-full items-center justify-center gap-2 p-4 pt-24">
+                {selectedModel.images.map((src, i) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt={`${selectedModel.title} ${i + 1}`}
+                    className="h-full min-w-0 flex-1 object-contain"
+                  />
+                ))}
+              </div>
+            )}
+            {selectedModel.modelPath && (
+              <ModelViewer
+                src={selectedModel.modelPath}
+                alt={selectedModel.title}
+                textures={selectedModel.textures}
+                autoRotate={true}
+                cameraControls={true}
+                className="w-full h-full"
+              />
+            )}
           </motion.div>
         </motion.div>
       )}
