@@ -22,9 +22,10 @@ const Header: React.FC = () => {
           : "bg-transparent"
       }`}
       style={{
-        backgroundColor: isScrolled ? "rgba(15, 23, 42, 0.95)" : "transparent",
+        backgroundColor: isScrolled ? "rgba(6, 6, 12, 0.94)" : "transparent",
       }}
     >
+      <div className="nav-texture" aria-hidden="true" />
       <Navigation />
     </header>
   );

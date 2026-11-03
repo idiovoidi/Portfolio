@@ -77,7 +77,7 @@ describe('Navigation - Unit Tests', () => {
       expect(softwareExperienceLink).toBeTruthy();
       
       const classList = softwareExperienceLink.className;
-      expect(classList).toContain('text-base');
+      expect(classList).toContain('text-sm');
       expect(classList).toContain('font-medium');
       expect(classList).toContain('transition-all');
     });

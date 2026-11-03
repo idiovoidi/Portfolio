@@ -139,7 +139,7 @@ const ConjoinedNavGroups: React.FC<ConjoinedNavGroupsProps> = ({
                 key={groupLink.id}
                 href={groupLink.href}
                 onClick={(e) => onNavClick(e, groupLink.href)}
-                className={`relative text-sm font-medium whitespace-nowrap transition-all duration-300 focus-visible-ring px-2 py-1 rounded hover:scale-105 ${
+                className={`nav-font relative text-xs font-medium whitespace-nowrap transition-all duration-300 focus-visible-ring px-2 py-1 rounded hover:scale-105 ${
                   activeSection === groupLink.id
                     ? "text-primary"
                     : "text-text-secondary hover:text-primary"
@@ -300,7 +300,7 @@ const Navigation: React.FC = () => {
                 <a
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative text-base font-medium whitespace-nowrap transition-all duration-300 focus-visible-ring px-3 py-1.5 rounded-lg ${
+                  className={`nav-font relative text-sm font-medium whitespace-nowrap transition-all duration-300 focus-visible-ring px-3 py-1.5 rounded-lg ${
                     activeSection === link.id
                       ? "text-primary"
                       : "text-text-secondary hover:text-primary"
