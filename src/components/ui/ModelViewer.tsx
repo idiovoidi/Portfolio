@@ -226,7 +226,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     container.appendChild(renderer.domElement);
 
     const pmrem = new THREE.PMREMGenerator(renderer);
-    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environment = pmrem.fromScene(RoomEnvironment(), 0.04).texture;
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.35));
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
