@@ -41,10 +41,11 @@ export interface Project {
   embedAspectRatio?: "16:9" | "4:3" | "1:1" | "9:16"; // Defaults to 16:9
   category: "development" | "game";
   featured?: boolean;
+  archived?: boolean; // Hidden from the site; kept here so it can be restored later
 }
 
-// Add your projects here
-export const projects: Project[] = [
+// Add your projects here (archived ones are filtered out of `projects` below)
+const allProjects: Project[] = [
   {
     id: "riftarium",
     title: "Riftarium",
@@ -185,6 +186,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/idiovoidi/Stardew_Valley_Gift_Tracker",
     category: "development",
     featured: true,
+    archived: true,
   },
   {
     id: "gta-classic-arcade",
@@ -197,6 +199,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/idiovoidi/GTA_Classic_Arcade",
     category: "game",
     featured: false,
+    archived: true,
   },
   {
     id: "procedural-park",
@@ -222,6 +225,9 @@ export const projects: Project[] = [
     featured: false,
   },
 ];
+
+// Projects shown on the site (archived ones excluded)
+export const projects: Project[] = allProjects.filter((p) => !p.archived);
 
 // Helper function to get projects by category
 export const getProjectsByCategory = (
