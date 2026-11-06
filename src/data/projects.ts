@@ -67,7 +67,7 @@ const allProjects: Project[] = [
       "A simple Zombie Tower Defence game used to learn the core concepts of game design in a rapidly iterable browser environment",
     image: "/projects/zombie-td-thumb.png",
     technologies: ["TypeScript", "Pixi.js", "HTML5 Canvas", "Vite"],
-    liveUrl: "https://idiovoidi.github.io/Zombie_Tower_Defence-OS2",
+    liveUrl: "https://idiovoidi.github.io/Zombie_Tower_Defence/",
     githubUrl: "https://github.com/idiovoidi/Zombie_Tower_Defence-OS2",
     // embedUrl removed - users will click "View Demo" to play on GitHub Pages
     category: "game",
@@ -222,6 +222,38 @@ const allProjects: Project[] = [
     technologies: ["JavaScript", "Babylon.js", "Yuka", "ECSY", "Recast.js"],
     githubUrl: "https://github.com/idiovoidi/Fish_Evo",
     category: "game",
+    featured: false,
+  },
+  {
+    id: "holmes-ops",
+    title: "Holmes Ops",
+    // TODO: replace with a real description (gameplay, your role, what you built)
+    description:
+      "A zombie shooter map built in Unity. More details, screenshots and a playable build coming soon.",
+    image: "/projects/placeholder.svg", // TODO: replace with a real thumbnail
+    // TODO: add screenshots, e.g. { image: "/projects/holmes-ops-1.webp", caption: "..." }
+    screenshots: [],
+    technologies: ["Unity", "C#"], // TODO: add/remove (e.g. ProBuilder, NavMesh, Blender)
+    // liveUrl: "",   // TODO: itch.io / WebGL build / trailer
+    // githubUrl: "", // TODO: repo link
+    // embedUrl: "",  // TODO: embedded WebGL build or YouTube trailer
+    category: "game",
+    featured: false,
+  },
+  {
+    id: "image-glitcher-audio-visualizer",
+    title: "Image Glitcher and Audio Visualizer",
+    // TODO: replace with a real description (features, your role, what you built)
+    description:
+      "An app for glitching images and visualizing audio. More details, screenshots and a download link coming soon.",
+    image: "/projects/placeholder.svg", // TODO: replace with a real thumbnail
+    // TODO: add screenshots, e.g. { image: "/projects/image-glitcher-1.webp", caption: "..." }
+    screenshots: [],
+    technologies: [], // TODO: add the tech stack
+    // liveUrl: "",   // TODO: demo / download link
+    // githubUrl: "", // TODO: repo link
+    // embedUrl: "",  // TODO: embedded demo or video
+    category: "development", // TODO: confirm category ("development" | "game")
     featured: false,
   },
 ];
