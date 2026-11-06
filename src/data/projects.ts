@@ -38,12 +38,27 @@ export interface Project {
   liveUrl?: string;
   githubUrl?: string;
   embedUrl?: string; // For embedded interactive demos (games, web apps)
+  embedAspectRatio?: "16:9" | "4:3" | "1:1" | "9:16"; // Defaults to 16:9
   category: "development" | "game";
   featured?: boolean;
 }
 
 // Add your projects here
 export const projects: Project[] = [
+  {
+    id: "riftarium",
+    title: "Riftarium",
+    description:
+      "My major game project, currently in active development. Watch the November 2026 dev preview to see it in action. A Steam page is coming soon.",
+    // TODO: replace with a custom thumbnail
+    image: "https://i.ytimg.com/vi/tYdIKW0jaLY/hqdefault.jpg",
+    technologies: [],
+    embedUrl: "https://www.youtube.com/embed/tYdIKW0jaLY?autoplay=1&rel=0",
+    embedAspectRatio: "9:16",
+    // TODO: add Steam link as liveUrl once the store page is live
+    category: "game",
+    featured: true,
+  },
   {
     id: "zombie-tower-defence",
     title: "Zombie Tower Defence",
@@ -58,8 +73,8 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "social-content-manager",
-    title: "Social Content Manager",
+    id: "reddit-scheduler",
+    title: "Reddit Scheduler",
     description:
       "A desktop application for organizing and scheduling artwork posts across social media platforms with ethical posting practices and automated workflows.",
     image: "/projects/social-content-manager-1.webp",
@@ -90,7 +105,7 @@ export const projects: Project[] = [
           "Settings panel for platform integrations and automation rules",
       },
     ],
-    technologies: ["Python", "PyQt6", "MongoDB", "REST APIs"],
+    technologies: ["Python", "PyQt6", "SQLite", "REST APIs"],
     // Private/unreleased project - no live URL or GitHub repo
     category: "development",
     featured: true,

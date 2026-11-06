@@ -210,7 +210,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           onClose={() => setIsEmbedOpen(false)}
           embedUrl={project.embedUrl}
           title={project.title}
-          aspectRatio="16:9"
+          aspectRatio={project.embedAspectRatio ?? "16:9"}
         />
       )}
     </>

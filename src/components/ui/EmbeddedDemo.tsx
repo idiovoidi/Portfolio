@@ -7,7 +7,7 @@ export interface EmbeddedDemoProps {
   onClose: () => void;
   embedUrl: string;
   title?: string;
-  aspectRatio?: "16:9" | "4:3" | "1:1";
+  aspectRatio?: "16:9" | "4:3" | "1:1" | "9:16";
 }
 
 const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
@@ -26,7 +26,9 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
     "16:9": "pb-[56.25%]",
     "4:3": "pb-[75%]",
     "1:1": "pb-[100%]",
+    "9:16": "pb-[177.78%]",
   };
+  const isPortrait = aspectRatio === "9:16";
 
   useEffect(() => {
     if (isOpen) {
@@ -115,7 +117,9 @@ const EmbeddedDemo: React.FC<EmbeddedDemoProps> = ({
     >
       <div
         ref={containerRef}
-        className="relative w-full max-w-6xl bg-surface rounded-lg shadow-2xl overflow-hidden"
+        className={`relative w-full ${
+          isPortrait ? "max-w-sm" : "max-w-6xl"
+        } bg-surface rounded-lg shadow-2xl overflow-hidden`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 bg-background border-b border-border">

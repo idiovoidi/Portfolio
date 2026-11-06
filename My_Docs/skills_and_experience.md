@@ -22,7 +22,7 @@ Master record of skills, software and experience. Add to this file as you learn 
 |---|---|---|---|---|
 | TypeScript | (95) | Current | Web apps, browser games, this portfolio | Zombie Tower Defence, this site |
 | JavaScript | (95) | Current | Browser games, vanilla JS (no libraries) | GTA Classic Arcade, Fish Evo |
-| Python | (75) | Current | Desktop apps, scripting, metadata tooling | Social Content Manager, ID:I/O VIEW, Stardew Gift Tracker |
+| Python | (75) | Current | Desktop apps, scripting, metadata tooling | Reddit Scheduler, ID:I/O VIEW, Stardew Gift Tracker |
 | HTML5 / CSS | (95) | Current | Markup, Canvas, layout | All web projects |
 | C# | TODO | TODO | Unity scripting | — |
 | C++ | TODO | TODO | Fundamentals, game dev / systems | — |
@@ -69,10 +69,10 @@ Master record of skills, software and experience. Add to this file as you learn 
 
 | Tool | Level | Status | Notes |
 |---|---|---|---|
-| MongoDB | (85) | Current | NoSQL; Social Content Manager |
+| MongoDB | (85) | Current | NoSQL; formerly used in Reddit Scheduler (now SQLite) |
 | MariaDB | (80) | Current | Relational / SQL |
-| SQLite | TODO | Current | Embedded DB; Stardew Gift Tracker |
-| REST APIs | TODO | Current | Platform integrations in Social Content Manager |
+| SQLite | TODO | Current | Embedded DB; Stardew Gift Tracker, Reddit Scheduler |
+| REST APIs | TODO | Current | Platform integrations in Reddit Scheduler |
 | JSON parsing | TODO | Current | Large metadata libraries in ID:I/O VIEW, including generative-AI metadata |
 
 ## 4. Dev tooling, testing & workflow
@@ -138,7 +138,7 @@ Releases: Spotify artist profile as `idiovoidi`. `TODO`: genres, instruments, re
 | Project | Type | Stack | Links |
 |---|---|---|---|
 | Zombie Tower Defence | Browser game | TypeScript, Pixi.js, HTML5 Canvas, Vite | [Live](https://idiovoidi.github.io/Zombie_Tower_Defence-OS2) · [Repo](https://github.com/idiovoidi/Zombie_Tower_Defence-OS2) |
-| Social Content Manager | Desktop app (private) | Python, PyQt6, MongoDB, REST APIs | Unreleased |
+| Reddit Scheduler | Desktop app (private) | Python, PyQt6, SQLite, REST APIs | Unreleased |
 | ID:I/O VIEW | Desktop app (media library and metadata viewer) | Python, PyQt6, Pillow, ExifTool | [Repo](https://github.com/idiovoidi/IDIOVIEW) |
 | Stardew Valley Gift Tracker | Desktop app | Python, PyQt6, SQLite, Qt Designer | [Repo](https://github.com/idiovoidi/Stardew_Valley_Gift_Tracker) |
 | GTA Classic Arcade | Browser game (no libraries) | JavaScript, HTML5 Canvas | [Live](https://idiovoidi.github.io/GTA_Classic_Arcade/) · [Repo](https://github.com/idiovoidi/GTA_Classic_Arcade) |
