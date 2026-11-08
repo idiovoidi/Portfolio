@@ -2,8 +2,10 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 
-// "idiovo" tiles into idiovoidiovoidi…, so each word shares its "i" with the next
-const DIVIDER_TEXT = "idiovo".repeat(40);
+// "idiovo" tiles into idiovoidiovoidi…, so each word shares its "i" with the next.
+// One run must be wider than the widest viewport (the track drifts by exactly
+// one run width), so keep this generous: ~36px per repeat => ~7000px.
+const DIVIDER_TEXT = "idiovo".repeat(200);
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
