@@ -169,7 +169,6 @@ describe("Navigation - Property Tests", () => {
         fc.constantFrom(
           "home",
           "projects",
-          "skills",
           "software-experience",
           "contact",
         ),

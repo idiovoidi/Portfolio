@@ -53,7 +53,8 @@ describe("App - SoftwareExperience Integration Tests", () => {
       expect(softwareExperienceSection).toBeTruthy();
     });
 
-    it("should render SoftwareExperience section after Skills section", () => {
+    // TODO: re-enable when the Skills section returns
+    it.skip("should render SoftwareExperience section after Skills section", () => {
       const { container } = render(<App />);
 
       const skillsSection = container.querySelector("section#skills");
@@ -328,7 +329,8 @@ describe("App - SoftwareExperience Integration Tests", () => {
       expect(scrollToCall.top).toBe(expectedScrollTop);
     });
 
-    it("should navigate from Skills section to SoftwareExperience section", () => {
+    // TODO: re-enable when the Skills section returns
+    it.skip("should navigate from Skills section to SoftwareExperience section", () => {
       const { container } = render(<App />);
 
       // Set up both sections

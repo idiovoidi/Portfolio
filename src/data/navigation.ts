@@ -21,7 +21,7 @@ export const navLinks: NavLink[] = [
     href: "#commercial",
     group: "commercial",
   },
-  { id: "skills", label: "Skills", href: "#skills" },
+  // Skills section hidden for now: { id: "skills", label: "Skills", href: "#skills" },
   {
     id: "software-experience",
     label: "Software Experience",

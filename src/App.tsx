@@ -3,7 +3,6 @@ import { Footer, Header } from "./components/layout";
 import { Contact } from "./components/sections/Contact";
 import { Hero } from "./components/sections/Hero";
 import { Projects } from "./components/sections/Projects";
-import { Skills } from "./components/sections/Skills";
 import { SoftwareExperience } from "./components/sections/SoftwareExperience";
 import { CosmicBackground } from "./components/ui/CosmicBackground";
 import { PerformanceToggle } from "./components/ui/PerformanceToggle";
@@ -85,7 +84,7 @@ function AppContent() {
         <Suspense fallback={<SectionFallback id="commercial" />}>
           <Commercial />
         </Suspense>
-        <Skills />
+        {/* Skills section hidden for now; re-add <Skills /> from ./components/sections/Skills when ready */}
         <SoftwareExperience />
         <Contact />
         <Footer />
