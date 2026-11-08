@@ -5,9 +5,16 @@ import {
   useSpring,
 } from "framer-motion";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import "./VoidEyeball.css";
 
 type MiniPulse = { id: number };
+
+const RGB_LAYERS = [
+  { name: "red", color: "rgba(255, 0, 100, 0.3)", offset: -3 },
+  { name: "cyan", color: "rgba(0, 255, 255, 0.3)", offset: 3 },
+  { name: "core", color: "rgba(0, 0, 0, 0.9)", offset: 0 },
+];
 
 const VoidEyeball: React.FC = () => {
   // Chaotic movement with jittery spring
@@ -17,6 +24,8 @@ const VoidEyeball: React.FC = () => {
   const eyeXSpring = useSpring(eyeX, springConfig);
   const eyeYSpring = useSpring(eyeY, springConfig);
   const [miniPulses, setMiniPulses] = useState<MiniPulse[]>([]);
+  const [paused, setPaused] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -31,11 +40,23 @@ const VoidEyeball: React.FC = () => {
       eyeY.set(deltaY * maxMove);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [eyeX, eyeY]);
+
+  // Stop the ambient loops while the hero is scrolled out of view
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setPaused(!entry.isIntersecting);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   const spawnMiniPulse = () => {
     const id = Date.now() + Math.random();
@@ -48,6 +69,9 @@ const VoidEyeball: React.FC = () => {
 
   return (
     <div
+      ref={rootRef}
+      className="void-eyeball"
+      data-paused={paused}
       style={{
         position: "absolute",
         top: "50%",
@@ -82,6 +106,7 @@ const VoidEyeball: React.FC = () => {
           cursor: "pointer",
           position: "relative",
           borderRadius: "50%",
+          WebkitTapHighlightColor: "transparent",
         }}
       >
         {/* Chaotic void container */}
@@ -92,6 +117,7 @@ const VoidEyeball: React.FC = () => {
             height: "100%",
           }}
         >
+          {/* Infall rings: spring handles position, CSS handles the loop */}
           {[0, 1].map((ring) => (
             <motion.div
               key={`infall-${ring}`}
@@ -101,23 +127,18 @@ const VoidEyeball: React.FC = () => {
                 left: "50%",
                 width: "88%",
                 height: "88%",
-                borderRadius: "50%",
-                border: "1px solid rgba(196, 181, 253, 0.28)",
-                boxShadow: "0 0 12px rgba(124, 58, 237, 0.18)",
                 x: eyeXSpring,
                 y: eyeYSpring,
                 translateX: "-50%",
                 translateY: "-50%",
                 pointerEvents: "none",
               }}
-              animate={{ scale: [1, 0.12], opacity: [0, 0.32, 0] }}
-              transition={{
-                duration: 4.6,
-                repeat: Infinity,
-                ease: "easeIn",
-                delay: ring * 2.3,
-              }}
-            />
+            >
+              <div
+                className="void-layer void-infall"
+                style={{ animationDelay: `${ring * 2.3}s` }}
+              />
+            </motion.div>
           ))}
 
           {/* Chaotic void core with RGB split */}
@@ -136,124 +157,31 @@ const VoidEyeball: React.FC = () => {
             }}
           >
             {/* RGB chromatic aberration layers */}
-            {[
-              { color: "rgba(255, 0, 100, 0.3)", offset: -3 },
-              { color: "rgba(0, 255, 255, 0.3)", offset: 3 },
-              { color: "rgba(0, 0, 0, 0.9)", offset: 0 },
-            ].map((layer, idx) => (
-              <motion.div
-                key={`rgb-${idx}`}
-                animate={{
-                  x: [layer.offset, -layer.offset, layer.offset],
-                  y: [layer.offset, layer.offset, -layer.offset],
-                  scale: [1, 1.02, 1],
-                }}
-                transition={{
-                  duration: 0.75 + idx * 0.18,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: "50%",
-                  background: `radial-gradient(circle, ${layer.color} 0%, transparent 70%)`,
-                  boxShadow:
-                    idx === 2
-                      ? "inset 0 0 60px rgba(0, 0, 0, 1), 0 0 80px rgba(124, 58, 237, 0.6)"
-                      : "none",
-                }}
+            {RGB_LAYERS.map((layer, idx) => (
+              <div
+                key={`rgb-${layer.name}`}
+                className="void-layer void-rgb"
+                style={
+                  {
+                    "--void-offset": `${layer.offset}px`,
+                    animationDuration: `${0.75 + idx * 0.18}s`,
+                    background: `radial-gradient(circle, ${layer.color} 0%, transparent 70%)`,
+                    boxShadow:
+                      idx === 2
+                        ? "inset 0 0 60px rgba(0, 0, 0, 1), 0 0 80px rgba(124, 58, 237, 0.6)"
+                        : "none",
+                  } as React.CSSProperties
+                }
               />
             ))}
 
             {/* Quiet resting glow */}
-            <motion.div
-              animate={{
-                scale: [1, 1.08, 1],
-                opacity: [0.45, 0.62, 0.45],
-              }}
-              transition={{
-                duration: 5.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              style={{
-                position: "absolute",
-                inset: "18%",
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(167, 139, 250, 0.55) 0%, rgba(124, 58, 237, 0.28) 46%, transparent 72%)",
-                filter: "blur(14px)",
-                mixBlendMode: "screen",
-              }}
-            />
+            <div className="void-layer void-rest-glow" />
 
             {/* Occasional deep breath from the core */}
-            <motion.div
-              animate={{
-                scale: [1, 1, 2.35, 1.12, 1],
-                opacity: [0, 0, 0.95, 0.28, 0],
-              }}
-              transition={{
-                duration: 7.5,
-                times: [0, 0.62, 0.76, 0.88, 1],
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-              style={{
-                position: "absolute",
-                inset: "-55%",
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(255, 120, 200, 0.75) 0%, rgba(124, 58, 237, 0.55) 22%, rgba(76, 29, 149, 0.25) 48%, transparent 72%)",
-                filter: "blur(22px)",
-                mixBlendMode: "screen",
-                pointerEvents: "none",
-              }}
-            />
-            <motion.div
-              animate={{
-                scale: [0.2, 0.2, 2.1, 1.05],
-                opacity: [0, 0, 0.72, 0],
-              }}
-              transition={{
-                duration: 7.5,
-                times: [0, 0.62, 0.8, 1],
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-              style={{
-                position: "absolute",
-                inset: "-95%",
-                borderRadius: "50%",
-                border: "2px solid rgba(221, 214, 254, 0.65)",
-                boxShadow:
-                  "0 0 48px rgba(167, 139, 250, 0.65), inset 0 0 36px rgba(236, 72, 153, 0.35)",
-                pointerEvents: "none",
-              }}
-            />
-            <motion.div
-              animate={{
-                scale: [1, 1, 1.55, 1],
-                opacity: [0.35, 0.35, 0.9, 0.35],
-              }}
-              transition={{
-                duration: 7.5,
-                times: [0, 0.62, 0.74, 1],
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-              style={{
-                position: "absolute",
-                inset: "5%",
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(167, 139, 250, 0.85) 0%, rgba(124, 58, 237, 0.45) 38%, transparent 70%)",
-                filter: "blur(10px)",
-                mixBlendMode: "screen",
-                pointerEvents: "none",
-              }}
-            />
+            <div className="void-layer void-breath" />
+            <div className="void-layer void-breath-ring" />
+            <div className="void-layer void-breath-core" />
 
             {/* Click-triggered mini pulses */}
             <AnimatePresence>
@@ -286,8 +214,7 @@ const VoidEyeball: React.FC = () => {
                       borderRadius: "50%",
                       background:
                         "radial-gradient(circle, rgba(255, 140, 210, 0.55) 0%, rgba(167, 139, 250, 0.4) 28%, rgba(76, 29, 149, 0.18) 52%, transparent 72%)",
-                      filter: "blur(14px)",
-                      mixBlendMode: "screen",
+                      willChange: "transform, opacity",
                       pointerEvents: "none",
                     }}
                   />
@@ -302,6 +229,7 @@ const VoidEyeball: React.FC = () => {
                       border: "1.5px solid rgba(221, 214, 254, 0.55)",
                       boxShadow:
                         "0 0 28px rgba(167, 139, 250, 0.45), inset 0 0 18px rgba(236, 72, 153, 0.25)",
+                      willChange: "transform, opacity",
                       pointerEvents: "none",
                     }}
                   />
@@ -319,8 +247,7 @@ const VoidEyeball: React.FC = () => {
                       borderRadius: "50%",
                       background:
                         "radial-gradient(circle, rgba(196, 181, 253, 0.75) 0%, rgba(124, 58, 237, 0.4) 40%, transparent 70%)",
-                      filter: "blur(8px)",
-                      mixBlendMode: "screen",
+                      willChange: "transform, opacity",
                       pointerEvents: "none",
                     }}
                   />
@@ -357,53 +284,23 @@ const VoidEyeball: React.FC = () => {
                   left: "50%",
                   width: `${width}px`,
                   height: `${height}px`,
-                  background: `linear-gradient(90deg, 
-                    transparent, 
+                  background: `linear-gradient(90deg,
+                    transparent,
                     rgba(${
                       i % 2 === 0 ? "167, 139, 250" : "236, 72, 153"
-                    }, 0.8), 
+                    }, 0.8),
                     transparent
                   )`,
                   transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(${
                     80 + i * 20
                   }px)`,
-                  filter: "blur(1px)",
                 }}
               />
             );
           })}
 
           {/* Distortion field with noise */}
-          <motion.div
-            animate={{
-              scale: [1, 1, 1.28, 1.04, 1],
-              opacity: [0.12, 0.12, 0.38, 0.18, 0.12],
-              rotate: [0, 360],
-            }}
-            transition={{
-              duration: 7.5,
-              times: [0, 0.62, 0.76, 0.88, 1],
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            style={{
-              position: "absolute",
-              inset: "-50%",
-              borderRadius: "50%",
-              background: `
-                radial-gradient(
-                  circle,
-                  transparent 30%,
-                  rgba(124, 58, 237, 0.15) 50%,
-                  rgba(167, 139, 250, 0.2) 70%,
-                  rgba(236, 72, 153, 0.1) 85%,
-                  transparent 100%
-                )
-              `,
-              filter: "blur(60px) contrast(1.3)",
-              mixBlendMode: "screen",
-            }}
-          />
+          <div className="void-layer void-distortion" />
         </div>
       </motion.div>
     </div>

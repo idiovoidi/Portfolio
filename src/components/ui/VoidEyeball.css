@@ -1,0 +1,244 @@
+/*
+ * VoidEyeball ambient loops.
+ *
+ * These run as CSS keyframes (transform + opacity only) so the browser can
+ * hand them to the compositor thread. Framer-motion animates `scale` on the
+ * JS main thread, which stuttered on phones whenever the page was busy.
+ * Avoid adding `filter: blur()` or `mix-blend-mode` to these layers: both
+ * force expensive per-frame repaints/blending on mobile GPUs. The radial
+ * gradients already fade to transparent, which gives the soft edge.
+ */
+
+.void-layer {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+/* Pause everything while the hero is off-screen */
+.void-eyeball[data-paused="true"] .void-layer {
+  animation-play-state: paused;
+}
+
+/* Infall rings: shrink toward the core */
+.void-infall {
+  inset: 0;
+  border: 1px solid rgba(196, 181, 253, 0.28);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.18);
+  animation-name: void-infall;
+  animation-duration: 4.6s;
+  animation-timing-function: ease-in;
+}
+
+@keyframes void-infall {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.72);
+    opacity: 0.32;
+  }
+  100% {
+    transform: scale(0.12);
+    opacity: 0;
+  }
+}
+
+/* RGB chromatic aberration layers (offset set via --void-offset) */
+.void-rgb {
+  inset: 0;
+  animation-name: void-rgb;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes void-rgb {
+  0% {
+    transform: translate(var(--void-offset), var(--void-offset)) scale(1);
+  }
+  50% {
+    transform: translate(calc(var(--void-offset) * -1), var(--void-offset))
+      scale(1.02);
+  }
+  100% {
+    transform: translate(var(--void-offset), calc(var(--void-offset) * -1))
+      scale(1);
+  }
+}
+
+/* Quiet resting glow */
+.void-rest-glow {
+  inset: 18%;
+  background: radial-gradient(
+    circle,
+    rgba(167, 139, 250, 0.55) 0%,
+    rgba(124, 58, 237, 0.28) 46%,
+    transparent 72%
+  );
+  animation-name: void-rest-glow;
+  animation-duration: 5.5s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes void-rest-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.62;
+  }
+}
+
+/* Deep breath from the core: 7.5s cycle, burst at ~62-80% */
+.void-breath {
+  inset: -55%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 120, 200, 0.75) 0%,
+    rgba(124, 58, 237, 0.55) 22%,
+    rgba(76, 29, 149, 0.25) 48%,
+    transparent 72%
+  );
+  animation-name: void-breath;
+  animation-duration: 7.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes void-breath {
+  0%,
+  62% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  76% {
+    transform: scale(2.35);
+    opacity: 0.95;
+  }
+  88% {
+    transform: scale(1.12);
+    opacity: 0.28;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.void-breath-ring {
+  inset: -95%;
+  border: 2px solid rgba(221, 214, 254, 0.65);
+  box-shadow:
+    0 0 48px rgba(167, 139, 250, 0.65),
+    inset 0 0 36px rgba(236, 72, 153, 0.35);
+  animation-name: void-breath-ring;
+  animation-duration: 7.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes void-breath-ring {
+  0%,
+  62% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(2.1);
+    opacity: 0.72;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+}
+
+.void-breath-core {
+  inset: 5%;
+  background: radial-gradient(
+    circle,
+    rgba(167, 139, 250, 0.85) 0%,
+    rgba(124, 58, 237, 0.45) 38%,
+    transparent 70%
+  );
+  animation-name: void-breath-core;
+  animation-duration: 7.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes void-breath-core {
+  0%,
+  62% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  74% {
+    transform: scale(1.55);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+}
+
+/* Distortion field that swells with the breath */
+.void-distortion {
+  inset: -50%;
+  background: radial-gradient(
+    circle,
+    transparent 30%,
+    rgba(124, 58, 237, 0.15) 50%,
+    rgba(167, 139, 250, 0.2) 70%,
+    rgba(236, 72, 153, 0.1) 85%,
+    transparent 100%
+  );
+  animation-name: void-distortion;
+  animation-duration: 7.5s;
+  animation-timing-function: linear;
+}
+
+@keyframes void-distortion {
+  0%,
+  62% {
+    transform: scale(1);
+    opacity: 0.12;
+  }
+  76% {
+    transform: scale(1.28);
+    opacity: 0.38;
+  }
+  88% {
+    transform: scale(1.04);
+    opacity: 0.18;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.12;
+  }
+}
+
+/* Reduced motion: hold each layer at its resting frame */
+@media (prefers-reduced-motion: reduce) {
+  .void-layer {
+    animation: none;
+  }
+  .void-infall,
+  .void-breath,
+  .void-breath-ring {
+    opacity: 0;
+  }
+  .void-rest-glow {
+    opacity: 0.45;
+  }
+  .void-breath-core {
+    opacity: 0.35;
+  }
+  .void-distortion {
+    opacity: 0.12;
+  }
+}
