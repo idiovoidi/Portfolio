@@ -213,7 +213,7 @@ const VoidEyeball: React.FC = () => {
                       inset: "-35%",
                       borderRadius: "50%",
                       background:
-                        "radial-gradient(circle, rgba(255, 140, 210, 0.55) 0%, rgba(167, 139, 250, 0.4) 28%, rgba(76, 29, 149, 0.18) 52%, transparent 72%)",
+                        "radial-gradient(circle, rgba(255, 140, 210, 0.55) 0%, rgba(167, 139, 250, 0.4) 28%, rgba(76, 29, 149, 0.18) 52%, transparent 70%)",
                       willChange: "transform, opacity",
                       pointerEvents: "none",
                     }}

@@ -76,7 +76,7 @@
     circle,
     rgba(167, 139, 250, 0.55) 0%,
     rgba(124, 58, 237, 0.28) 46%,
-    transparent 72%
+    transparent 70%
   );
   animation-name: void-rest-glow;
   animation-duration: 5.5s;
@@ -103,7 +103,7 @@
     rgba(255, 120, 200, 0.75) 0%,
     rgba(124, 58, 237, 0.55) 22%,
     rgba(76, 29, 149, 0.25) 48%,
-    transparent 72%
+    transparent 70%
   );
   animation-name: void-breath;
   animation-duration: 7.5s;
@@ -189,12 +189,13 @@
 /* Distortion field that swells with the breath */
 .void-distortion {
   inset: -50%;
+  /* closest-side keeps the fade inside the border-radius clip (no hard rim) */
   background: radial-gradient(
-    circle,
-    transparent 30%,
-    rgba(124, 58, 237, 0.15) 50%,
-    rgba(167, 139, 250, 0.2) 70%,
-    rgba(236, 72, 153, 0.1) 85%,
+    circle closest-side,
+    transparent 21%,
+    rgba(124, 58, 237, 0.15) 35%,
+    rgba(167, 139, 250, 0.2) 50%,
+    rgba(236, 72, 153, 0.1) 72%,
     transparent 100%
   );
   animation-name: void-distortion;
