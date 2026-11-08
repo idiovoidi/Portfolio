@@ -1,6 +1,6 @@
 # Product Overview
 
-Personal developer portfolio website being built for the DevOne Hackathon 2025. Portfolio will be built on a Windows 11 PC before being deployed to Github Pages/Vercel
+Personal developer portfolio website for idiovoidi. Built on a Windows 11 PC and deployed to Vercel.
 
 ## Purpose
 
@@ -32,8 +32,3 @@ Projects are evaluated on:
 - **Creativity & Uniqueness**: Personal branding, creative design choices, custom elements
 - **Responsiveness**: Mobile-friendly, cross-browser compatible
 
-## Timeline
-
-- Submission Deadline: September 28, 2025 @ 11:59 PM UTC
-- Must be built during hackathon timeline (Sept 9-28, 2025)
-- Live URL and public GitHub repository required for judging

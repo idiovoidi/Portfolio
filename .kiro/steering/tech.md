@@ -40,7 +40,7 @@
 - Vercel (recommended - automatic deployments, HTTPS, edge caching)
 
 **Version Control:**
-- Public GitHub repository required for hackathon submission
+- Public GitHub repository (idiovoidi/Portfolio)
 
 ## Common Commands
 

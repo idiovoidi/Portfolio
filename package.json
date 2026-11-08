@@ -1,7 +1,7 @@
 {
-  "name": "developer-portfolio",
+  "name": "idiovoidi-portfolio",
   "version": "1.0.0",
-  "description": "Personal developer portfolio for DevOne Hackathon 2025",
+  "description": "Personal portfolio of idiovoidi: projects, skills and digital artwork",
   "type": "module",
   "scripts": {
     "dev": "vite",

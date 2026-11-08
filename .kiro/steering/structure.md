@@ -136,4 +136,4 @@ The portfolio is built as a single-page application (SPA) with smooth scrolling 
 - Commit regularly with clear, descriptive messages
 - Use conventional commit format: `feat:`, `fix:`, `style:`, `docs:`
 - Keep commits atomic (one logical change per commit)
-- Push to public GitHub repository for hackathon submission
+- Push to the public GitHub repository (idiovoidi/Portfolio)
