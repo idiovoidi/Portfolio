@@ -198,6 +198,8 @@ const Navigation: React.FC = () => {
     href: string,
   ) => {
     e.preventDefault();
+    // Let any open overlay (lightbox, screenshot carousel) close itself
+    window.dispatchEvent(new CustomEvent("portfolio:navigate"));
     const targetId = href.replace("#", "");
     const element = document.getElementById(targetId);
 

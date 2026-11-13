@@ -35,10 +35,12 @@ const Lightbox: React.FC<LightboxProps> = ({
       };
 
       document.addEventListener("keydown", handleEscape);
+      window.addEventListener("portfolio:navigate", onClose);
 
       return () => {
         document.body.style.overflow = "unset";
         document.removeEventListener("keydown", handleEscape);
+        window.removeEventListener("portfolio:navigate", onClose);
       };
     }
   }, [isOpen, onClose]);

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
 import type { ProjectScreenshot } from "../../data/projects";
 
@@ -37,6 +37,13 @@ const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({
     if (e.key === "ArrowRight") goToNext();
     if (e.key === "Escape") onClose();
   };
+
+  // Close when the user clicks the site navigation
+  useEffect(() => {
+    if (!isOpen) return;
+    window.addEventListener("portfolio:navigate", onClose);
+    return () => window.removeEventListener("portfolio:navigate", onClose);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
