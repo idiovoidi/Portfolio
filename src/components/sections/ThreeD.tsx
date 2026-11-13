@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePerformanceSettings } from "../../contexts/PerformanceContext";
 import {
   type ThreeDTool,
@@ -54,6 +54,73 @@ const CycleImages = ({
           }`}
         />
       ))}
+    </div>
+  );
+};
+
+/**
+ * Slowly spinning Sketchfab preview. The thumbnail shows until the viewer is
+ * ready, and the iframe is only mounted while the tile is on screen (and
+ * unmounted again when it leaves) so at most a couple of WebGL contexts exist.
+ */
+const SketchfabPreview = ({
+  id,
+  title,
+  thumbnail,
+  live,
+}: {
+  id: string;
+  title: string;
+  thumbnail?: string;
+  live: boolean;
+}) => {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || !live) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting);
+        if (!entry.isIntersecting) setLoaded(false);
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [live]);
+
+  const src =
+    `https://sketchfab.com/models/${id}/embed?autostart=1&autospin=0.15` +
+    "&preload=1&transparent=1&dnt=1&ui_theme=dark&ui_controls=0&ui_infos=0" +
+    "&ui_inspector=0&ui_stop=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0" +
+    "&ui_annotations=0&ui_ar=0&ui_hint=0&camera=0";
+
+  return (
+    <div ref={boxRef} className="absolute inset-0 bg-black/50">
+      {thumbnail && (
+        <img
+          src={thumbnail}
+          alt={title}
+          loading="lazy"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            loaded ? "opacity-0" : "opacity-100"
+          }`}
+        />
+      )}
+      {live && visible && (
+        <iframe
+          title={`${title} preview`}
+          src={src}
+          loading="lazy"
+          tabIndex={-1}
+          onLoad={() => setLoaded(true)}
+          allow="autoplay; xr-spatial-tracking"
+          className="absolute inset-0 h-full w-full border-0 pointer-events-none"
+        />
+      )}
     </div>
   );
 };
@@ -120,6 +187,14 @@ export const ThreeD = () => {
                       />
                     ))}
                   </div>
+                )}
+                {work.sketchfabId && !work.modelPath && (
+                  <SketchfabPreview
+                    id={work.sketchfabId}
+                    title={work.title}
+                    thumbnail={work.thumbnail}
+                    live={inView && settings.enableAnimations}
+                  />
                 )}
                 {inView && work.modelPath && (
                   <ModelViewer
@@ -213,7 +288,16 @@ export const ThreeD = () => {
                 ))}
               </div>
             )}
-            {selectedModel.modelPath && (
+            {selectedModel.sketchfabId && (
+              <iframe
+                title={selectedModel.title}
+                src={`https://sketchfab.com/models/${selectedModel.sketchfabId}/embed?ui_theme=dark&dnt=1`}
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+                allowFullScreen
+                className="h-full w-full border-0"
+              />
+            )}
+            {!selectedModel.sketchfabId && selectedModel.modelPath && (
               <ModelViewer
                 src={selectedModel.modelPath}
                 alt={selectedModel.title}

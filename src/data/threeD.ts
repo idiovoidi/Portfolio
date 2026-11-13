@@ -22,6 +22,8 @@ export interface ThreeDWork {
   /** How multiple images fill the tile: side by side (default) or fading between them */
   imageLayout?: "split" | "cycle";
   thumbnail?: string;
+  /** Sketchfab model UID (32-char hex at the end of the model URL); shown as an embed in the modal */
+  sketchfabId?: string;
   category?: string;
   /** Software used; rendered as colour-coded tags */
   tools?: ThreeDTool[];
@@ -33,7 +35,9 @@ export const threeDWorks: ThreeDWork[] = [
     id: "barrel",
     title: "Barrel",
     description: "3D barrel model",
-    modelPath: "/3D/AnyConv.com__Barrel_FBX.glb",
+    sketchfabId: "a566a5cf6074415abff037efbfdfcfb9",
+    thumbnail:
+      "https://media.sketchfab.com/models/a566a5cf6074415abff037efbfdfcfb9/thumbnails/8227c77daf1d4ad5b4a99b11a1a8993c/5b11b26b6ebc4250b352bfab4b2c04b1.jpeg",
     category: "Model",
     tools: ["Maya", "Substance Painter"],
   },
@@ -41,17 +45,29 @@ export const threeDWorks: ThreeDWork[] = [
     id: "corrupted-healthpack",
     title: "Corrupted Healthpack",
     description: "Corrupted health restoration item with PBR textures",
-    // Use base mesh + external maps (embedded bake hits blob Image() issues in some browsers)
-    modelPath: "/3D/corrupted-healthpack.glb",
+    sketchfabId: "cdaf4afdfea74a93b81820e26a36ba32",
+    thumbnail:
+      "https://media.sketchfab.com/models/cdaf4afdfea74a93b81820e26a36ba32/thumbnails/6a0ab618d0af4ef98f95322c38986366/01679804c0be481989afd26fbe939258.jpeg",
     category: "Model",
     tools: ["Maya", "Substance Painter"],
-    textures: {
-      albedo: "/3D/Corrupted_Healthpack/openPBR_shader1_AlbedoTransparency.png",
-      normal: "/3D/Corrupted_Healthpack/openPBR_shader1_Normal.png",
-      emission: "/3D/Corrupted_Healthpack/openPBR_shader1_Emission.png",
-      metallicSmoothness:
-        "/3D/Corrupted_Healthpack/openPBR_shader1_MetallicSmoothness.png",
-    },
+  },
+  {
+    id: "minigun-flamethrower",
+    title: "Minigun Flamethrower",
+    sketchfabId: "98146df4f3d147d69415a2c061ec8388",
+    thumbnail:
+      "https://media.sketchfab.com/models/98146df4f3d147d69415a2c061ec8388/thumbnails/1c3ed99552de4513baef14298d3b737f/bcf79f21dc714844b3d54d2af881a188.jpeg",
+    category: "Model",
+    tools: ["Maya", "Substance Painter"],
+  },
+  {
+    id: "zombie-pope",
+    title: "Zombie Pope",
+    sketchfabId: "ae329a4ae07c48ad9bc4564a885348d4",
+    thumbnail:
+      "https://media.sketchfab.com/models/ae329a4ae07c48ad9bc4564a885348d4/thumbnails/74a7e950c2e34e20a99320910de20127/00101ae333ef485798d544adf133721d.jpeg",
+    category: "Model",
+    tools: ["Maya", "Substance Painter"],
   },
   {
     id: "enemy",
