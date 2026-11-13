@@ -210,6 +210,31 @@ const commercialPhotographyWorks = commercialPhotographyPaths.map(
   },
 );
 
+const holdenFiles = [
+  "Car_10.jpg",
+  "Car_12.jpg",
+  "Car_19.jpg",
+  "Car_20.jpg",
+  "Car_25 Sepia.jpg",
+  "Car_27.jpg",
+  "Car_28 Colour.jpg",
+];
+
+const holdenWork: CommercialWork = {
+  id: "vintage-holden",
+  title: "Vintage Holden",
+  medium: "Photography",
+  tags: ["photography"],
+  tools: ["Lightroom", "Photoshop"],
+  date: "2018",
+  image: commercialThumb("Vintage_Holden", holdenFiles[0]),
+  fullImage: commercialAsset("Vintage_Holden", holdenFiles[0]),
+  stack: holdenFiles.map((file) => ({
+    image: commercialThumb("Vintage_Holden", file),
+    fullImage: commercialAsset("Vintage_Holden", file),
+  })),
+};
+
 const videoWorks: CommercialWork[] = commercialVideoItems.map((item) => {
   const pathSegments = [VIDEO_DIR, item.file];
   const base = {
@@ -257,6 +282,7 @@ export const commercialWorks: CommercialWork[] = [
   ...websiteWorks,
   ...designWorks,
   ...musicPhotographyWorks,
+  holdenWork,
   ...commercialPhotographyWorks,
   ...videoWorks,
   ...youtubeWorks,
