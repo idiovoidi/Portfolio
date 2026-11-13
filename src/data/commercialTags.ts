@@ -8,7 +8,8 @@ export type CommercialTagId =
   | "photography"
   | "costume"
   | "video"
-  | "video-reel";
+  | "video-reel"
+  | "website";
 
 export interface CommercialTagDefinition {
   id: CommercialTagId;
@@ -17,6 +18,7 @@ export interface CommercialTagDefinition {
 
 /** Tags available in the filter bar (order = pill order). */
 export const commercialTagDefinitions: CommercialTagDefinition[] = [
+  { id: "website", label: "Website" },
   { id: "design", label: "Design & print" },
   { id: "music-photography", label: "Music photography" },
   { id: "photography", label: "Commercial photography" },

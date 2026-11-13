@@ -90,7 +90,39 @@ const designEntry = (
   fullImage: commercialAsset(filename),
 });
 
+/** Listed first in the grid. */
+const websiteWorks: CommercialWork[] = [
+  designEntry("Introduction Page.jpg", {
+    title: "Introduction Page",
+    medium: "Web design",
+    tags: ["website"],
+    tools: [],
+    date: "",
+  }),
+  designEntry("Bond Street WebsiteV2Bricks.jpg", {
+    title: "Bond Street Website V2",
+    medium: "Web design",
+    tags: ["website"],
+    tools: [],
+    date: "",
+  }),
+];
+
 const designWorks: CommercialWork[] = [
+  designEntry("Annie's-Story-Time-Refined-v2.png", {
+    title: "Annie's Story Time",
+    medium: "Design",
+    tags: ["design"],
+    tools: [],
+    date: "",
+  }),
+  designEntry("Insect-Poster-D.jpg", {
+    title: "Insect Poster",
+    medium: "Poster design",
+    tags: ["design"],
+    tools: [],
+    date: "",
+  }),
   designEntry("Annual-Report-2020-Final.png", {
     title: "Annual Report 2020",
     medium: "Print layout",
@@ -204,6 +236,7 @@ const youtubeWorks: CommercialWork[] = [
 ];
 
 export const commercialWorks: CommercialWork[] = [
+  ...websiteWorks,
   ...designWorks,
   ...musicPhotographyWorks,
   ...commercialPhotographyWorks,
