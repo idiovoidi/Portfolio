@@ -34,6 +34,8 @@ export interface CommercialWork {
     /** Label in the lightbox only (used when there is no tile caption) */
     lightboxCaption?: string;
   }[];
+  /** With a stack: auto-cycle the images in a single tile instead of stacking them */
+  cycle?: boolean;
   /** When set, lightbox plays this video instead of showing fullImage */
   videoSrc?: string;
   /** YouTube video/short ID; lightbox shows a YouTube embed */
@@ -227,6 +229,7 @@ const holdenWork: CommercialWork = {
   tags: ["photography"],
   tools: ["Lightroom", "Photoshop"],
   date: "2018",
+  cycle: true,
   image: commercialThumb("Vintage_Holden", holdenFiles[0]),
   fullImage: commercialAsset("Vintage_Holden", holdenFiles[0]),
   stack: holdenFiles.map((file) => ({

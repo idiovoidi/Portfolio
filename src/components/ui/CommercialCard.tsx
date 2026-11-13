@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CommercialWork } from "../../data/commercial";
 import { commercialTagLabel } from "../../data/commercialTags";
 
@@ -22,7 +22,18 @@ const floatOffset = (index: number) => {
 const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [cycleIndex, setCycleIndex] = useState(0);
   const offset = floatOffset(index);
+  const cycleCount = work.cycle && work.stack ? work.stack.length : 0;
+
+  useEffect(() => {
+    if (cycleCount < 2 || isHovered) return;
+    const id = window.setInterval(
+      () => setCycleIndex((i) => (i + 1) % cycleCount),
+      3000,
+    );
+    return () => window.clearInterval(id);
+  }, [cycleCount, isHovered]);
 
   return (
     <motion.div
@@ -69,21 +80,30 @@ const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
         )}
         <div
           className={`flex flex-col transition-opacity duration-500 ${
-            work.stack ? "gap-2" : ""
+            work.stack && !cycleCount ? "gap-2" : ""
           } ${imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0"}`}
         >
           {(work.stack ?? [{ image: work.image, caption: undefined }]).map(
             (item, i) => (
-              <div key={item.image} className="relative">
+              <div
+                key={item.image}
+                className={
+                  cycleCount
+                    ? `transition-opacity duration-700 ${
+                        i === 0 ? "relative" : "absolute inset-0"
+                      } ${i === cycleIndex ? "opacity-100" : "opacity-0"}`
+                    : "relative"
+                }
+              >
                 <img
                   src={item.image}
                   alt={work.stack ? `${work.title} ${i + 1}` : work.title}
-                  loading="lazy"
+                  loading={cycleCount ? "eager" : "lazy"}
                   decoding="async"
                   onLoad={i === 0 ? () => setImageLoaded(true) : undefined}
-                  className={`block h-auto w-full ${
-                    work.stack ? "rounded-[2px] shadow-md" : ""
-                  }`}
+                  className={`block w-full ${
+                    cycleCount ? "h-full object-cover" : "h-auto"
+                  } ${work.stack ? "rounded-[2px] shadow-md" : ""}`}
                 />
                 {item.caption && imageLoaded && (
                   <span className="absolute bottom-2 left-2 rounded bg-black/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-100">

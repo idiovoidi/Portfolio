@@ -256,49 +256,6 @@ const VoidEyeball: React.FC = () => {
             </AnimatePresence>
           </motion.div>
 
-          {/* Digital corruption artifacts */}
-          {[0, 1, 2, 3, 4, 5, 6].map((i) => {
-            const width = 30 + i * 8;
-            const height = 2 + (i % 3);
-            const angle = (i / 7) * 360;
-            const xOffset = i % 2 === 0 ? 10 : -10;
-
-            return (
-              <motion.div
-                key={`artifact-${i}`}
-                animate={{
-                  opacity: [0, 0.22, 0],
-                  scaleX: [0, 1, 0],
-                  x: [0, xOffset],
-                }}
-                transition={{
-                  duration: 0.4 + i * 0.05,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.4,
-                  repeatDelay: 2.5 + i * 0.3,
-                }}
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  width: `${width}px`,
-                  height: `${height}px`,
-                  background: `linear-gradient(90deg,
-                    transparent,
-                    rgba(${
-                      i % 2 === 0 ? "167, 139, 250" : "236, 72, 153"
-                    }, 0.8),
-                    transparent
-                  )`,
-                  transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(${
-                    80 + i * 20
-                  }px)`,
-                }}
-              />
-            );
-          })}
-
           {/* Distortion field with noise */}
           <div className="void-layer void-distortion" />
         </div>
