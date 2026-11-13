@@ -12,6 +12,8 @@ export interface LightboxProps {
   nftUrl?: string;
   /** When set, plays an HTML5 video instead of showing the image */
   videoSrc?: string;
+  /** When set, shows a YouTube embed (works for Shorts, portrait) */
+  youtubeId?: string;
 }
 
 const Lightbox: React.FC<LightboxProps> = ({
@@ -23,6 +25,7 @@ const Lightbox: React.FC<LightboxProps> = ({
   embedUrl,
   nftUrl,
   videoSrc,
+  youtubeId,
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -100,6 +103,16 @@ const Lightbox: React.FC<LightboxProps> = ({
               </a>
             )}
           </div>
+        ) : youtubeId ? (
+          <iframe
+            key={youtubeId}
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&playsinline=1`}
+            title={title || "YouTube video"}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            className="h-full max-h-[80vh] aspect-[9/16] max-w-full rounded-lg shadow-2xl border-0 bg-black"
+          />
         ) : videoSrc ? (
           <video
             key={videoSrc}

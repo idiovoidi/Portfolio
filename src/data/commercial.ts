@@ -27,6 +27,8 @@ export interface CommercialWork {
   fullImage?: string;
   /** When set, lightbox plays this video instead of showing fullImage */
   videoSrc?: string;
+  /** YouTube video/short ID; lightbox shows a YouTube embed */
+  youtubeId?: string;
   medium: string;
   tools: string[];
   date: string;
@@ -186,11 +188,27 @@ const videoWorks: CommercialWork[] = commercialVideoItems.map((item) => {
   };
 });
 
+const youtubeWorks: CommercialWork[] = [
+  {
+    id: "jar-of-broken-art",
+    title: "Jar Of Broken Art",
+    medium: "YouTube Short",
+    tools: [],
+    date: "",
+    // First tag is the badge on the card; "video" keeps it under the Video filter too
+    tags: ["video-reel", "video"],
+    // Portrait thumbnail served by YouTube
+    image: "https://i.ytimg.com/vi/6WfzqMWTSLk/oar2.jpg",
+    youtubeId: "6WfzqMWTSLk",
+  },
+];
+
 export const commercialWorks: CommercialWork[] = [
   ...designWorks,
   ...musicPhotographyWorks,
   ...commercialPhotographyWorks,
   ...videoWorks,
+  ...youtubeWorks,
 ];
 
 export const filterCommercialWorks = (

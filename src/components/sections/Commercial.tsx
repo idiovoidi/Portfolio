@@ -180,6 +180,7 @@ export const Commercial = () => {
           imageSrc={selectedWork.fullImage || selectedWork.image}
           imageAlt={selectedWork.title}
           videoSrc={selectedWork.videoSrc}
+          youtubeId={selectedWork.youtubeId}
           title={
             selectedWork.client
               ? `${selectedWork.title} — ${selectedWork.client}`

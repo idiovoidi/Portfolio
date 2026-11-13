@@ -70,13 +70,6 @@ export const threeDWorks: ThreeDWork[] = [
     tools: ["Maya", "Substance Painter"],
   },
   {
-    id: "enemy",
-    title: "Enemy Character",
-    description: "3D enemy character model",
-    modelPath: "/3D/enemy.glb",
-    category: "Character",
-  },
-  {
     id: "3d-man-sculpt",
     title: "Male Bust Sculpt",
     images: ["/3D/Zbrush/3D_Man_Sculpt_Zbrush.png"],

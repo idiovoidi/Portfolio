@@ -49,7 +49,8 @@ const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
         }
       }}
       aria-label={
-        work.videoSrc ? `Play ${work.title}` : `View ${work.title} in full size`
+        work.videoSrc || work.youtubeId
+          ? `Play ${work.title}` : `View ${work.title} in full size`
       }
       style={{
         filter: isHovered
@@ -89,7 +90,7 @@ const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
           </span>
         )}
 
-        {work.videoSrc && imageLoaded && (
+        {(work.videoSrc || work.youtubeId) && imageLoaded && (
           <span
             className="pointer-events-none absolute inset-0 flex items-center justify-center"
             aria-hidden
