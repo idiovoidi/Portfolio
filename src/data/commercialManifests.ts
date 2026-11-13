@@ -63,6 +63,8 @@ export const commercialPhotographyPaths = [
   `${PHOTO_ROOT}/_DSC0380.jpg`,
   `${PHOTO_ROOT}/_DSC0149.jpg`,
   `${PHOTO_ROOT}/Alison Yanez Exhibit_A7_0452.jpg`,
+  `${PHOTO_ROOT}/Rusty_Rockers_2019_Portrait-Composite-Everyone.jpg`,
+  `${PHOTO_ROOT}/Rusted_Rockers_GWC_BandPhoto_2025.jpg`,
   `${PHOTO_ROOT}/Costume/Batman2.jpg`,
   `${PHOTO_ROOT}/Costume/Blackwidow.jpg`,
   `${PHOTO_ROOT}/Costume/The-King.jpg`,
