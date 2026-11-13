@@ -12,6 +12,7 @@ import {
   PerformanceProvider,
   usePerformance,
 } from "./contexts/PerformanceContext";
+import { useHashScroll } from "./hooks";
 import { lazySection } from "./utils/lazySection";
 
 const ArtGallery = lazySection(
@@ -47,6 +48,7 @@ const SectionFallback = ({ id }: { id: string }) => (
 
 function AppContent() {
   const { settings } = usePerformance();
+  useHashScroll();
 
   return (
     <div
