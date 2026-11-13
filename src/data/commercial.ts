@@ -25,6 +25,15 @@ export interface CommercialWork {
   image: string;
   /** Full-resolution original for lightbox (images) */
   fullImage?: string;
+  /** Several images shown stacked top-to-bottom in one tile and in the lightbox */
+  stack?: {
+    image: string;
+    fullImage: string;
+    /** Label on the tile and in the lightbox */
+    caption?: string;
+    /** Label in the lightbox only (used when there is no tile caption) */
+    lightboxCaption?: string;
+  }[];
   /** When set, lightbox plays this video instead of showing fullImage */
   videoSrc?: string;
   /** YouTube video/short ID; lightbox shows a YouTube embed */
@@ -91,21 +100,28 @@ const designEntry = (
 });
 
 /** Listed first in the grid. */
+const websiteStackFiles = [
+  "Introduction Page.jpg",
+  "Bond Street WebsiteV2Bricks.jpg",
+];
+
 const websiteWorks: CommercialWork[] = [
-  designEntry("Introduction Page.jpg", {
-    title: "Introduction Page",
+  {
+    id: "website-design-stack",
+    title: "Website Design",
     medium: "Web design",
     tags: ["website"],
     tools: [],
     date: "",
-  }),
-  designEntry("Bond Street WebsiteV2Bricks.jpg", {
-    title: "Bond Street Website V2",
-    medium: "Web design",
-    tags: ["website"],
-    tools: [],
-    date: "",
-  }),
+    image: commercialThumb(websiteStackFiles[0]),
+    fullImage: commercialAsset(websiteStackFiles[0]),
+    stack: websiteStackFiles.map((file, i) => ({
+      image: commercialThumb(file),
+      fullImage: commercialAsset(file),
+      caption: i === 0 ? "Landing page" : undefined,
+      lightboxCaption: i === 1 ? "Website" : undefined,
+    })),
+  },
 ];
 
 const designWorks: CommercialWork[] = [
@@ -118,6 +134,8 @@ const designWorks: CommercialWork[] = [
   }),
   designEntry("Insect-Poster-D.jpg", {
     title: "Insect Poster",
+    description:
+      "Specimens photoscanned from a historic book, matched to their names and composited to fit the poster size.",
     medium: "Poster design",
     tags: ["design"],
     tools: [],

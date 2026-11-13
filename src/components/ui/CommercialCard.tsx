@@ -67,16 +67,33 @@ const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-amber-200/40 border-t-amber-400" />
           </div>
         )}
-        <img
-          src={work.image}
-          alt={work.title}
-          loading="lazy"
-          decoding="async"
-          onLoad={() => setImageLoaded(true)}
-          className={`block h-auto w-full transition-opacity duration-500 ${
-            imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0"
-          }`}
-        />
+        <div
+          className={`flex flex-col transition-opacity duration-500 ${
+            work.stack ? "gap-2" : ""
+          } ${imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0"}`}
+        >
+          {(work.stack ?? [{ image: work.image, caption: undefined }]).map(
+            (item, i) => (
+              <div key={item.image} className="relative">
+                <img
+                  src={item.image}
+                  alt={work.stack ? `${work.title} ${i + 1}` : work.title}
+                  loading="lazy"
+                  decoding="async"
+                  onLoad={i === 0 ? () => setImageLoaded(true) : undefined}
+                  className={`block h-auto w-full ${
+                    work.stack ? "rounded-[2px] shadow-md" : ""
+                  }`}
+                />
+                {item.caption && imageLoaded && (
+                  <span className="absolute bottom-2 left-2 rounded bg-black/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-100">
+                    {item.caption}
+                  </span>
+                )}
+              </div>
+            ),
+          )}
+        </div>
 
         {work.tags[0] && imageLoaded && (
           <span
@@ -124,6 +141,11 @@ const CommercialCard = ({ work, index, onClick }: CommercialCardProps) => {
             {work.title}
           </h3>
           <p className="text-sm text-amber-100/75">{work.medium}</p>
+          {work.description && (
+            <p className="mt-1 text-xs leading-snug text-amber-100/70">
+              {work.description}
+            </p>
+          )}
           {work.client && (
             <p className="mt-1 text-xs uppercase tracking-wider text-amber-200/65">
               {work.client}

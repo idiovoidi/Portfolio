@@ -180,7 +180,12 @@ export const Commercial = () => {
           imageSrc={selectedWork.fullImage || selectedWork.image}
           imageAlt={selectedWork.title}
           videoSrc={selectedWork.videoSrc}
+          description={selectedWork.description}
           youtubeId={selectedWork.youtubeId}
+          images={selectedWork.stack?.map((item) => ({
+            src: item.fullImage,
+            caption: item.caption ?? item.lightboxCaption,
+          }))}
           title={
             selectedWork.client
               ? `${selectedWork.title} — ${selectedWork.client}`

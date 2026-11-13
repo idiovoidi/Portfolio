@@ -8,10 +8,14 @@ export interface LightboxProps {
   imageSrc: string;
   imageAlt?: string;
   title?: string;
+  /** Short caption shown under the title */
+  description?: string;
   embedUrl?: string;
   nftUrl?: string;
   /** When set, plays an HTML5 video instead of showing the image */
   videoSrc?: string;
+  /** When set, shows these images stacked in a scrollable column */
+  images?: { src: string; caption?: string }[];
   /** When set, shows a YouTube embed (works for Shorts, portrait) */
   youtubeId?: string;
 }
@@ -22,10 +26,12 @@ const Lightbox: React.FC<LightboxProps> = ({
   imageSrc,
   imageAlt = "Lightbox image",
   title,
+  description,
   embedUrl,
   nftUrl,
   videoSrc,
   youtubeId,
+  images,
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -74,9 +80,18 @@ const Lightbox: React.FC<LightboxProps> = ({
 
       <div className="relative max-w-7xl max-h-[90vh] w-full h-full flex flex-col items-center justify-center">
         {title && (
-          <h3 className="text-white text-xl font-semibold mb-4 text-center">
+          <h3
+            className={`text-white text-xl font-semibold text-center ${
+              description ? "mb-1" : "mb-4"
+            }`}
+          >
             {title}
           </h3>
+        )}
+        {description && (
+          <p className="mb-4 max-w-2xl text-center text-sm text-gray-300">
+            {description}
+          </p>
         )}
 
         {embedUrl ? (
@@ -126,6 +141,27 @@ const Lightbox: React.FC<LightboxProps> = ({
           >
             Your browser does not support the video tag.
           </video>
+        ) : images && images.length > 0 ? (
+          <div
+            className="flex max-h-[80vh] w-full max-w-5xl flex-col gap-4 overflow-y-auto rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          >
+            {images.map(({ src, caption }, i) => (
+              <figure key={src} className="m-0">
+                {caption && (
+                  <figcaption className="mb-2 text-sm font-semibold uppercase tracking-wider text-amber-100">
+                    {caption}
+                  </figcaption>
+                )}
+                <img
+                  src={src}
+                  alt={caption ?? `${imageAlt} ${i + 1}`}
+                  className="block h-auto w-full rounded-lg shadow-2xl"
+                />
+              </figure>
+            ))}
+          </div>
         ) : (
           <img
             src={imageSrc}
