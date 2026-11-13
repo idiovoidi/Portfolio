@@ -17,6 +17,7 @@ export const musicPhotographyFiles = [
   "LDG006.jpg",
   "LDG008.jpg",
   "LDG066.jpg",
+  "Lachey Doley Group - 2018.jpg",
   "Sony_A7_1419.jpg",
   "Sony_A7_2568.jpg",
   "Sony_A7_2578.jpg",
